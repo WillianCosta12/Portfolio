@@ -12,6 +12,7 @@ interface Project {
   id: string
   title: string
   subtitle: string
+  subtitleEn?: string
   description: string
   descriptionEn?: string
   stack: { name: string; category: StackCategory }[]
@@ -27,8 +28,9 @@ const projects: Project[] = [
     id: 'flowapp',
     title: 'FlowApp',
     subtitle: 'Landing page · App de produtividade',
+    subtitleEn: 'Landing page · Productivity App',
     description:
-      'Landing page de alto impacto para um app ficticio de produtividade. Hero com mockup 3D de celular, scroll storytelling por secao e Lighthouse 100.',
+      'Landing page de alto impacto para um app fictício de produtividade. Hero com mockup 3D de celular, scroll storytelling por seção e Lighthouse 100.',
     descriptionEn:
       'High-impact landing page for a fictional productivity app. 3D phone mockup hero, section-by-section scroll storytelling and perfect Lighthouse score.',
     stack: [
@@ -46,8 +48,9 @@ const projects: Project[] = [
     id: 'velour',
     title: 'Velour',
     subtitle: 'E-commerce · Moda',
+    subtitleEn: 'E-commerce · Fashion',
     description:
-      'E-commerce completo de moda com lookbook editorial, filtro por cor e tamanho, wishlist, carrinho, checkout e autenticacao JWT.',
+      'E-commerce completo de moda com lookbook editorial, filtro por cor e tamanho, wishlist, carrinho, checkout e autenticação JWT.',
     descriptionEn:
       'Full-featured fashion e-commerce with editorial lookbook, color and size filters, wishlist, cart, checkout and JWT auth.',
     stack: [
@@ -64,9 +67,10 @@ const projects: Project[] = [
   {
     id: 'flowmoney',
     title: 'FlowMoney',
-    subtitle: 'Dashboard · Financas pessoais',
+    subtitle: 'Dashboard · Finanças pessoais',
+    subtitleEn: 'Dashboard · Personal Finance',
     description:
-      'Controle financeiro pessoal com cadastro de receitas e despesas por categoria, graficos mensais, metas de gastos e historico anual.',
+      'Controle financeiro pessoal com cadastro de receitas e despesas por categoria, gráficos mensais, metas de gastos e histórico anual.',
     descriptionEn:
       'Personal finance tracker with income and expense categories, monthly charts, spending goals and annual history.',
     stack: [
@@ -83,9 +87,10 @@ const projects: Project[] = [
   {
     id: 'spacenow',
     title: 'SpaceNow',
-    subtitle: 'API Integration · NASA',
+    subtitle: 'Integração · NASA APIs',
+    subtitleEn: 'API Integration · NASA',
     description:
-      'Explorador de dados espaciais em tempo real. Foto astronomica do dia, galeria do Rover em Marte e rastreamento ao vivo da Estacao Espacial Internacional.',
+      'Explorador de dados espaciais em tempo real. Foto astronômica do dia, galeria do Rover em Marte e rastreamento ao vivo da Estação Espacial Internacional.',
     descriptionEn:
       'Real-time space data explorer. Astronomy picture of the day, Mars Rover photo gallery and live ISS tracking.',
     stack: [
@@ -102,6 +107,7 @@ const projects: Project[] = [
     id: 'automacao',
     title: 'Automação de Processos',
     subtitle: 'Case Study · n8n + Make',
+    subtitleEn: 'Case Study · n8n + Make',
     description:
       'Documentação técnica de automações reais implantadas em empresa do ecossistema contábil e jurídico — integrando ERPs, planilhas e APIs de gestão.',
     descriptionEn:
@@ -162,7 +168,10 @@ function KanbanMockup() {
 }
 
 function FeaturedCard({ project, isInView }: { project: Project; isInView: boolean }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const isEn = i18n.language === 'en'
+  const desc     = isEn && project.descriptionEn ? project.descriptionEn : project.description
+  const subtitle = isEn && project.subtitleEn    ? project.subtitleEn    : project.subtitle
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const rotateX = useSpring(useTransform(y, [-100, 100], [4, -4]), { stiffness: 300, damping: 30 })
@@ -211,11 +220,11 @@ function FeaturedCard({ project, isInView }: { project: Project; isInView: boole
               </span>
             </div>
 
-            <p className="text-[var(--accent)] text-xs font-mono font-medium mb-1">{project.subtitle}</p>
+            <p className="text-[var(--accent)] text-xs font-mono font-medium mb-1">{subtitle}</p>
             <h3 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-3 group-hover:text-[var(--accent)] transition-colors">
               {project.title}
             </h3>
-            <p className="text-muted-foreground leading-relaxed mb-5">{project.description}</p>
+            <p className="text-muted-foreground leading-relaxed mb-5">{desc}</p>
 
             {/* Stack */}
             <div className="flex flex-wrap gap-2">
@@ -265,7 +274,10 @@ function FeaturedCard({ project, isInView }: { project: Project; isInView: boole
 }
 
 function ProjectCard({ project, index, isInView }: { project: Project; index: number; isInView: boolean }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const isEn = i18n.language === 'en'
+  const desc     = isEn && project.descriptionEn ? project.descriptionEn : project.description
+  const subtitle = isEn && project.subtitleEn    ? project.subtitleEn    : project.subtitle
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const rotateX = useSpring(useTransform(y, [-100, 100], [8, -8]), { stiffness: 300, damping: 30 })
@@ -328,12 +340,12 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
         ))}
       </div>
 
-      <p className="text-[var(--accent)] text-xs font-mono mb-1">{project.subtitle}</p>
+      <p className="text-[var(--accent)] text-xs font-mono mb-1">{subtitle}</p>
       <h3 className="font-display text-xl font-semibold text-foreground mb-2 group-hover:text-[var(--accent)] transition-colors">
         {project.title}
       </h3>
       <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-        {project.description}
+        {desc}
       </p>
 
       {/* Links */}

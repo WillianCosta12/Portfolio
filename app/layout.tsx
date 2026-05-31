@@ -25,7 +25,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'Willian Costa | Full-stack Developer',
   description:
-    'Full-stack developer especializado em React, Spring Boot, Node.js e automacao. Construo produtos web completos, do design ao deploy.',
+    'Full-stack developer especializado em React, Spring Boot, Node.js e automação. Construo produtos web completos, do design ao deploy.',
   keywords: [
     'Willian Costa',
     'Full-stack Developer',
@@ -43,14 +43,14 @@ export const metadata: Metadata = {
     url: 'https://williancosta.vercel.app',
     title: 'Willian Costa | Full-stack Developer',
     description:
-      'Full-stack developer especializado em React, Spring Boot, Node.js e automacao.',
+      'Full-stack developer especializado em React, Spring Boot, Node.js e automação.',
     siteName: 'Willian Costa',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Willian Costa | Full-stack Developer',
     description:
-      'Full-stack developer especializado em React, Spring Boot, Node.js e automacao.',
+      'Full-stack developer especializado em React, Spring Boot, Node.js e automação.',
   },
   robots: {
     index: true,

@@ -29,7 +29,7 @@ const categoryColors: Record<string, string> = {
   tools: 'bg-secondary text-muted-foreground border-border',
 }
 
-const experience = [
+const experiencePt = [
   {
     period: 'mai 2026 – presente',
     role: 'Desenvolvedor',
@@ -61,6 +61,41 @@ const experience = [
     type: 'Estágio',
     description:
       'Suporte técnico, criação de relatórios, organização e visualização de dados. Primeiros projetos de automação e consumo de APIs externas.',
+  },
+]
+
+const experienceEn = [
+  {
+    period: 'May 2026 – present',
+    role: 'Developer',
+    company: 'Kron Tecnologia',
+    type: 'Freelance',
+    description:
+      'Custom automations and integrations for SMBs. I work end-to-end from mapping the client\'s process to delivering the solution — n8n, Make, API integrations and web development when off-the-shelf tools don\'t fit.',
+  },
+  {
+    period: 'Apr 2026 – present',
+    role: 'Developer',
+    company: 'DM Contabilidade',
+    type: 'Full-time',
+    description:
+      'Automations and internal systems for the accounting ecosystem. Integrations between ERPs, spreadsheets and fiscal tools. Reduction of manual rework in repetitive back-office processes.',
+  },
+  {
+    period: 'Sep 2025 – Mar 2026',
+    role: 'IT Assistant',
+    company: 'Escritório Duarte e Almeida',
+    type: 'Full-time',
+    description:
+      'Business intelligence dashboards, internal and external data analysis, integrations and automations supporting legal demands. Strategic report writing and metrics tracking.',
+  },
+  {
+    period: 'Jan 2025 – Sep 2025',
+    role: 'IT Intern',
+    company: 'Escritório Duarte e Almeida',
+    type: 'Internship',
+    description:
+      'Technical support, report creation, data organization and visualization. First automation projects and external API consumption.',
   },
 ]
 
@@ -101,11 +136,12 @@ function BentoCard({
 }
 
 export function About() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { ref, isInView } = useIntersectionObserver<HTMLElement>({ threshold: 0.1 })
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const yearsCount = useCountUp(1, 1200, isInView)
   const projectsCount = useCountUp(12, 1500, isInView)
+  const experience = i18n.language === 'en' ? experienceEn : experiencePt
 
   const handleBentoMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()

@@ -98,6 +98,9 @@ function TerminalCard() {
               <span className="text-purple-400">{item.key}</span>
               <span className="text-muted-foreground">: </span>
               <span className="text-yellow-400/80">{item.value}</span>
+              {i < skillData.length - 1 && (
+                <span className="text-muted-foreground">,</span>
+              )}
             </motion.div>
           ))}
           <span className="text-[var(--accent)]">{'}'}</span>

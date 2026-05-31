@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'pt_BR',
     alternateLocale: 'en_US',
-    url: 'https://williancosta.dev',
+    url: 'https://williancosta.vercel.app',
     title: 'Willian Costa | Full-stack Developer',
     description:
       'Full-stack developer especializado em React, Spring Boot, Node.js e automacao.',

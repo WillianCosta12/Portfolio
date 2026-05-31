@@ -100,10 +100,10 @@ const projects: Project[] = [
   },
   {
     id: 'automacao',
-    title: 'Automacao de Processos',
+    title: 'Automação de Processos',
     subtitle: 'Case Study · n8n + Make',
     description:
-      'Documentacao tecnica de automacoes reais implantadas em empresa do ecossistema contabil e juridico — integrando ERPs, planilhas e APIs de gestao.',
+      'Documentação técnica de automações reais implantadas em empresa do ecossistema contábil e jurídico — integrando ERPs, planilhas e APIs de gestão.',
     descriptionEn:
       'Technical documentation of real automations deployed in accounting and legal companies — integrating ERPs, spreadsheets and management APIs.',
     stack: [

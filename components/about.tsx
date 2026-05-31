@@ -34,9 +34,9 @@ const experience = [
     period: 'mai 2026 – presente',
     role: 'Desenvolvedor',
     company: 'Kron Tecnologia',
-    type: 'Autonomo',
+    type: 'Autônomo',
     description:
-      'Automacoes e integracoes sob medida para PMEs. Atuo do mapeamento do processo do cliente ate a entrega da solucao — n8n, Make, integracoes via API e desenvolvimento web quando a solucao de prateleira nao resolve.',
+      'Automações e integrações sob medida para PMEs. Atuo do mapeamento do processo do cliente até a entrega da solução — n8n, Make, integrações via API e desenvolvimento web quando a solução de prateleira não resolve.',
   },
   {
     period: 'abr 2026 – presente',
@@ -44,23 +44,23 @@ const experience = [
     company: 'DM Contabilidade',
     type: 'Tempo integral',
     description:
-      'Automacoes e sistemas internos para o ecossistema contabil. Integracoes entre ERPs, planilhas e ferramentas fiscais. Reducao de retrabalho manual em processos repetitivos do escritorio.',
+      'Automações e sistemas internos para o ecossistema contábil. Integrações entre ERPs, planilhas e ferramentas fiscais. Redução de retrabalho manual em processos repetitivos do escritório.',
   },
   {
     period: 'set 2025 – mar 2026',
     role: 'Assistente de TI',
-    company: 'Escritorio Duarte e Almeida',
+    company: 'Escritório Duarte e Almeida',
     type: 'Tempo integral',
     description:
-      'Dashboards de inteligencia de negocio, analise de dados internos e externos, integracoes e automacoes de apoio as demandas juridicas. Elaboracao de relatorios estrategicos e acompanhamento de metricas.',
+      'Dashboards de inteligência de negócio, análise de dados internos e externos, integrações e automações de apoio às demandas jurídicas. Elaboração de relatórios estratégicos e acompanhamento de métricas.',
   },
   {
     period: 'jan 2025 – set 2025',
-    role: 'Estagiario de TI',
-    company: 'Escritorio Duarte e Almeida',
-    type: 'Estagio',
+    role: 'Estagiário de TI',
+    company: 'Escritório Duarte e Almeida',
+    type: 'Estágio',
     description:
-      'Suporte tecnico, criacao de relatorios, organizacao e visualizacao de dados. Primeiros projetos de automacao e consumo de APIs externas.',
+      'Suporte técnico, criação de relatórios, organização e visualização de dados. Primeiros projetos de automação e consumo de APIs externas.',
   },
 ]
 

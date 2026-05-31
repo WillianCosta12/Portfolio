@@ -4,6 +4,19 @@
 
 ---
 
+## Projetos em desenvolvimento (stand by)
+
+Estes dois projetos estão planejados mas só serão iniciados após o portfolio estar finalizado visualmente (redesign + animações completas, faltando apenas os dados reais dos projetos).
+
+| Projeto | Tipo | Stack |
+|---|---|---|
+| **FlowApp** | Landing page de app móvel — hero com mockup 3D, scroll storytelling, animações avançadas | React · TypeScript · Tailwind · Framer Motion |
+| **Velour** | E-commerce de moda — lookbook, filtro por cor/tamanho, wishlist, carrinho, checkout, JWT | React · Node.js · PostgreSQL · JWT · Tailwind |
+
+Quando o portfolio estiver pronto para receber projetos reais, retomar o desenvolvimento destes dois.
+
+---
+
 ## Sobre o Projeto
 
 Portfolio pessoal de **Willian Costa**, desenvolvedor Full-stack Junior. O objetivo é mostrar capacidade técnica em full-stack + automações, com storytelling de desenvolvimento (processo Figma → código). O site é bilíngue (PT/EN), suporta dark/light mode e será publicado até **27 de julho de 2026**.

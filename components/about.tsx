@@ -3,24 +3,24 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, MapPin, Zap, Code2, Briefcase, TrendingUp } from 'lucide-react'
+import { Github, Linkedin, Instagram, Mail, MapPin, Zap, Code2, Briefcase, TrendingUp } from 'lucide-react'
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer'
 import { useCountUp } from '@/hooks/use-count-up'
 
 const skills = [
-  { name: 'React', category: 'frontend' },
-  { name: 'TypeScript', category: 'frontend' },
-  { name: 'Next.js', category: 'frontend' },
-  { name: 'Tailwind CSS', category: 'frontend' },
+  { name: 'React',         category: 'frontend' },
+  { name: 'TypeScript',    category: 'frontend' },
+  { name: 'Next.js',       category: 'frontend' },
+  { name: 'Tailwind CSS',  category: 'frontend' },
   { name: 'Framer Motion', category: 'frontend' },
-  { name: 'Spring Boot', category: 'backend' },
-  { name: 'Node.js', category: 'backend' },
-  { name: 'PostgreSQL', category: 'backend' },
-  { name: 'REST APIs', category: 'backend' },
-  { name: 'N8N', category: 'tools' },
-  { name: 'Make', category: 'tools' },
-  { name: 'Figma', category: 'tools' },
-  { name: 'Docker', category: 'tools' },
+  { name: 'Node.js',       category: 'backend'  },
+  { name: 'Spring Boot',   category: 'backend'  },
+  { name: 'PostgreSQL',    category: 'backend'  },
+  { name: 'REST APIs',     category: 'backend'  },
+  { name: 'JavaScript',    category: 'backend'  },
+  { name: 'n8n',           category: 'tools'    },
+  { name: 'Make',          category: 'tools'    },
+  { name: 'Figma',         category: 'tools'    },
 ]
 
 const categoryColors: Record<string, string> = {
@@ -31,23 +31,44 @@ const categoryColors: Record<string, string> = {
 
 const experience = [
   {
-    period: '2024 - Presente',
-    role: 'Full-stack Developer',
-    company: 'Empresa Atual',
-    description: 'Desenvolvimento de automacoes e aplicacoes internas. Criacao de pipelines de dados e integracoes entre sistemas.',
+    period: 'mai 2026 – presente',
+    role: 'Desenvolvedor',
+    company: 'Kron Tecnologia',
+    type: 'Autonomo',
+    description:
+      'Automacoes e integracoes sob medida para PMEs. Atuo do mapeamento do processo do cliente ate a entrega da solucao — n8n, Make, integracoes via API e desenvolvimento web quando a solucao de prateleira nao resolve.',
   },
   {
-    period: '2023 - 2024',
-    role: 'Freelancer',
-    company: 'Projetos Proprios',
-    description: 'Desenvolvimento de landing pages, dashboards e automacoes com N8N para clientes diversos.',
+    period: 'abr 2026 – presente',
+    role: 'Desenvolvedor',
+    company: 'DM Contabilidade',
+    type: 'Tempo integral',
+    description:
+      'Automacoes e sistemas internos para o ecossistema contabil. Integracoes entre ERPs, planilhas e ferramentas fiscais. Reducao de retrabalho manual em processos repetitivos do escritorio.',
+  },
+  {
+    period: 'set 2025 – mar 2026',
+    role: 'Assistente de TI',
+    company: 'Escritorio Duarte e Almeida',
+    type: 'Tempo integral',
+    description:
+      'Dashboards de inteligencia de negocio, analise de dados internos e externos, integracoes e automacoes de apoio as demandas juridicas. Elaboracao de relatorios estrategicos e acompanhamento de metricas.',
+  },
+  {
+    period: 'jan 2025 – set 2025',
+    role: 'Estagiario de TI',
+    company: 'Escritorio Duarte e Almeida',
+    type: 'Estagio',
+    description:
+      'Suporte tecnico, criacao de relatorios, organizacao e visualizacao de dados. Primeiros projetos de automacao e consumo de APIs externas.',
   },
 ]
 
 const socialLinks = [
-  { icon: Github, href: 'https://github.com', label: 'GitHub' },
-  { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-  { icon: Mail, href: 'mailto:contato@williancosta.dev', label: 'Email' },
+  { icon: Github,    href: 'https://github.com/WillianCosta12',              label: 'GitHub'    },
+  { icon: Linkedin,  href: 'https://www.linkedin.com/in/williancosta-dev/',  label: 'LinkedIn'  },
+  { icon: Instagram, href: 'https://instagram.com/wcosta.dev',               label: 'Instagram' },
+  { icon: Mail,      href: 'mailto:willacosta873@gmail.com',                 label: 'Email'     },
 ]
 
 function BentoCard({
@@ -83,8 +104,8 @@ export function About() {
   const { t } = useTranslation()
   const { ref, isInView } = useIntersectionObserver<HTMLElement>({ threshold: 0.1 })
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
-  const yearsCount = useCountUp(2, 1200, isInView)
-  const projectsCount = useCountUp(15, 1500, isInView)
+  const yearsCount = useCountUp(1, 1200, isInView)
+  const projectsCount = useCountUp(12, 1500, isInView)
 
   const handleBentoMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -174,7 +195,7 @@ export function About() {
             <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wide font-medium">
               {t('about.location_label')}
             </p>
-            <p className="font-display text-2xl font-semibold text-foreground">Brasil 🇧🇷</p>
+            <p className="font-display text-xl font-semibold text-foreground">Natal, RN 🇧🇷</p>
           </BentoCard>
 
           {/* Card 3 — Status */}
@@ -296,7 +317,7 @@ export function About() {
               {experience.map((exp, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: i === 0 ? -20 : 20 }}
+                  initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.5 + i * 0.15 }}
                   className="relative pl-5 border-l-2 border-[var(--accent)] hover:border-[var(--accent-hover)] transition-colors"
@@ -306,7 +327,9 @@ export function About() {
                     {exp.period}
                   </span>
                   <h4 className="font-semibold text-foreground">{exp.role}</h4>
-                  <p className="text-sm text-muted-foreground">{exp.company}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {exp.company} · <span className="text-xs text-[var(--accent)]">{exp.type}</span>
+                  </p>
                   <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{exp.description}</p>
                 </motion.div>
               ))}

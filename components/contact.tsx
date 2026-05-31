@@ -22,20 +22,20 @@ const contactLinks = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'contato@williancosta.dev',
-    href: 'mailto:contato@williancosta.dev',
+    value: 'willacosta873@gmail.com',
+    href: 'mailto:willacosta873@gmail.com',
   },
   {
     icon: Github,
     label: 'GitHub',
-    value: 'github.com/willian',
-    href: 'https://github.com',
+    value: 'github.com/WillianCosta12',
+    href: 'https://github.com/WillianCosta12',
   },
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    value: 'linkedin.com/in/willian',
-    href: 'https://linkedin.com',
+    value: 'linkedin.com/in/williancosta-dev',
+    href: 'https://www.linkedin.com/in/williancosta-dev/',
   },
 ]
 

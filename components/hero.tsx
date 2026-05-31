@@ -3,13 +3,14 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowRight, Github, Linkedin, Mail, Terminal } from 'lucide-react'
+import { ArrowRight, Github, Linkedin, Instagram, Mail, Terminal } from 'lucide-react'
 import { useTypewriter } from '@/hooks/use-typewriter'
 
 const socialLinks = [
-  { icon: Github, href: 'https://github.com', label: 'GitHub' },
-  { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-  { icon: Mail, href: 'mailto:contato@williancosta.dev', label: 'Email' },
+  { icon: Github,    href: 'https://github.com/WillianCosta12',              label: 'GitHub'    },
+  { icon: Linkedin,  href: 'https://www.linkedin.com/in/williancosta-dev/',  label: 'LinkedIn'  },
+  { icon: Instagram, href: 'https://instagram.com/wcosta.dev',               label: 'Instagram' },
+  { icon: Mail,      href: 'mailto:willacosta873@gmail.com',                 label: 'Email'     },
 ]
 
 const techBadges = [
@@ -196,7 +197,6 @@ export function Hero() {
               variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } } }}
               className="mb-6"
             >
-              <p className="text-muted-foreground text-xl mb-3">{t('hero.greeting')}</p>
               <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.0]">
                 <span className="gradient-text">{displayText}</span>
                 {!isComplete && <span className="cursor" />}

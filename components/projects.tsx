@@ -1,125 +1,135 @@
 'use client'
 
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { ExternalLink, Github, ArrowUpRight, Zap, Star } from 'lucide-react'
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer'
 
-type ProjectStatus = 'done' | 'progress' | 'concept'
-type StackCategory = 'frontend' | 'backend' | 'tools'
+type ProjectStatus = 'done' | 'wip' | 'concept'
+type StackCategory = 'frontend' | 'backend' | 'tools' | 'infra'
 
 interface Project {
   id: string
   title: string
   subtitle: string
   description: string
+  descriptionEn?: string
   stack: { name: string; category: StackCategory }[]
   github?: string
   live?: string
-  caseStudy?: boolean
   featured?: boolean
   status: ProjectStatus
+  isAutomation?: boolean
 }
 
 const projects: Project[] = [
   {
-    id: 'nexus',
-    title: 'Nexus',
-    subtitle: 'Kanban Full-stack',
-    description: 'Board Kanban completo com autenticacao JWT, drag & drop, gestao de projetos e tarefas em tempo real. Backend em Spring Boot com PostgreSQL, frontend em React com estado global e animacoes fluidas.',
+    id: 'flowapp',
+    title: 'FlowApp',
+    subtitle: 'Landing page · App de produtividade',
+    description:
+      'Landing page de alto impacto para um app ficticio de produtividade. Hero com mockup 3D de celular, scroll storytelling por secao e Lighthouse 100.',
+    descriptionEn:
+      'High-impact landing page for a fictional productivity app. 3D phone mockup hero, section-by-section scroll storytelling and perfect Lighthouse score.',
     stack: [
-      { name: 'React', category: 'frontend' },
-      { name: 'Spring Boot', category: 'backend' },
-      { name: 'PostgreSQL', category: 'backend' },
-      { name: 'JWT', category: 'backend' },
-    ],
-    github: 'https://github.com',
-    live: 'https://example.com',
-    featured: true,
-    status: 'done',
-  },
-  {
-    id: 'devcard',
-    title: 'DevCard',
-    subtitle: 'GitHub Profile Generator',
-    description: 'Gerador de card de perfil GitHub com temas customizaveis, visualizacao de linguagens e export PNG/SVG.',
-    stack: [
-      { name: 'React', category: 'frontend' },
-      { name: 'Node.js', category: 'backend' },
-      { name: 'GitHub API', category: 'tools' },
-    ],
-    github: 'https://github.com',
-    live: 'https://example.com',
-    status: 'done',
-  },
-  {
-    id: 'lumis',
-    title: 'Lumis',
-    subtitle: 'Landing SaaS',
-    description: 'Landing page SaaS ficticia com animacoes cinematograficas, Lighthouse score 100 em Performance e Acessibilidade.',
-    stack: [
-      { name: 'React', category: 'frontend' },
+      { name: 'React',         category: 'frontend' },
+      { name: 'TypeScript',    category: 'frontend' },
+      { name: 'Tailwind CSS',  category: 'frontend' },
       { name: 'Framer Motion', category: 'frontend' },
-      { name: 'Tailwind', category: 'frontend' },
     ],
-    github: 'https://github.com',
-    live: 'https://example.com',
-    status: 'done',
+    github: 'https://github.com/WillianCosta12',
+    live: '#',
+    featured: true,
+    status: 'wip',
+  },
+  {
+    id: 'velour',
+    title: 'Velour',
+    subtitle: 'E-commerce · Moda',
+    description:
+      'E-commerce completo de moda com lookbook editorial, filtro por cor e tamanho, wishlist, carrinho, checkout e autenticacao JWT.',
+    descriptionEn:
+      'Full-featured fashion e-commerce with editorial lookbook, color and size filters, wishlist, cart, checkout and JWT auth.',
+    stack: [
+      { name: 'React',        category: 'frontend' },
+      { name: 'Node.js',      category: 'backend'  },
+      { name: 'PostgreSQL',   category: 'backend'  },
+      { name: 'JWT',          category: 'backend'  },
+      { name: 'Tailwind CSS', category: 'frontend' },
+    ],
+    github: 'https://github.com/WillianCosta12',
+    live: '#',
+    status: 'wip',
   },
   {
     id: 'flowmoney',
     title: 'FlowMoney',
-    subtitle: 'Controle Financeiro',
-    description: 'Dashboard de controle financeiro com graficos interativos, categorias personalizaveis e relatorios mensais em PDF.',
+    subtitle: 'Dashboard · Financas pessoais',
+    description:
+      'Controle financeiro pessoal com cadastro de receitas e despesas por categoria, graficos mensais, metas de gastos e historico anual.',
+    descriptionEn:
+      'Personal finance tracker with income and expense categories, monthly charts, spending goals and annual history.',
     stack: [
-      { name: 'React', category: 'frontend' },
-      { name: 'Recharts', category: 'frontend' },
-      { name: 'Spring Boot', category: 'backend' },
-      { name: 'PostgreSQL', category: 'backend' },
+      { name: 'React',       category: 'frontend' },
+      { name: 'Spring Boot', category: 'backend'  },
+      { name: 'PostgreSQL',  category: 'backend'  },
+      { name: 'Recharts',    category: 'frontend' },
+      { name: 'JWT',         category: 'backend'  },
     ],
-    github: 'https://github.com',
-    live: 'https://example.com',
-    status: 'done',
+    github: 'https://github.com/WillianCosta12',
+    live: '#',
+    status: 'wip',
   },
   {
-    id: 'auto01',
-    title: 'Automacao Interna',
-    subtitle: 'Case Study — Empresa',
-    description: 'Pipeline de dados para automatizar relatorios diarios, integrando fontes internas e gerando outputs estruturados. Reducao de 4h/dia de trabalho manual.',
+    id: 'spacenow',
+    title: 'SpaceNow',
+    subtitle: 'API Integration · NASA',
+    description:
+      'Explorador de dados espaciais em tempo real. Foto astronomica do dia, galeria do Rover em Marte e rastreamento ao vivo da Estacao Espacial Internacional.',
+    descriptionEn:
+      'Real-time space data explorer. Astronomy picture of the day, Mars Rover photo gallery and live ISS tracking.',
     stack: [
-      { name: 'N8N', category: 'tools' },
-      { name: 'Make', category: 'tools' },
-      { name: 'PostgreSQL', category: 'backend' },
+      { name: 'React',      category: 'frontend' },
+      { name: 'TypeScript', category: 'frontend' },
+      { name: 'NASA API',   category: 'infra'    },
+      { name: 'Tailwind',   category: 'frontend' },
     ],
-    caseStudy: true,
-    status: 'done',
+    github: 'https://github.com/WillianCosta12',
+    live: '#',
+    status: 'wip',
   },
   {
-    id: 'auto02',
-    title: 'Content Pipeline',
-    subtitle: 'Case Study — N8N',
-    description: 'Pipeline de conteudo: Notion → traducao PT/EN → revisao → Buffer → Telegram. Totalmente automatizado com N8N e inteligencia artificial para adaptacao de tom.',
+    id: 'automacao',
+    title: 'Automacao de Processos',
+    subtitle: 'Case Study · n8n + Make',
+    description:
+      'Documentacao tecnica de automacoes reais implantadas em empresa do ecossistema contabil e juridico — integrando ERPs, planilhas e APIs de gestao.',
+    descriptionEn:
+      'Technical documentation of real automations deployed in accounting and legal companies — integrating ERPs, spreadsheets and management APIs.',
     stack: [
-      { name: 'N8N', category: 'tools' },
-      { name: 'Notion API', category: 'tools' },
-      { name: 'Buffer', category: 'tools' },
+      { name: 'n8n',       category: 'tools'   },
+      { name: 'Make',      category: 'tools'   },
+      { name: 'Node.js',   category: 'backend' },
+      { name: 'REST APIs', category: 'backend' },
     ],
-    caseStudy: true,
+    github: '#',
+    live: '#',
     status: 'done',
+    isAutomation: true,
   },
 ]
 
 const stackColors: Record<StackCategory, string> = {
   frontend: 'bg-[var(--accent-muted)] text-[var(--accent)] border-[var(--accent-border)]',
   backend: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
-  tools: 'bg-secondary text-muted-foreground border-border',
+  tools: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+  infra: 'bg-secondary text-muted-foreground border-border',
 }
 
 const statusConfig: Record<ProjectStatus, { label: string; key: string; className: string }> = {
-  done: { label: 'done', key: 'projects.status_done', className: 'bg-green-500/10 text-green-400 border-green-500/30' },
-  progress: { label: 'progress', key: 'projects.status_progress', className: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30' },
-  concept: { label: 'concept', key: 'projects.status_concept', className: 'bg-purple-500/10 text-purple-400 border-purple-500/30' },
+  done: { label: 'done', key: 'projects.done', className: 'bg-[var(--accent-muted)] text-[var(--accent)] border-[var(--accent-border)]' },
+  wip: { label: 'wip', key: 'projects.wip', className: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30' },
+  concept: { label: 'concept', key: 'projects.concept', className: 'bg-secondary text-muted-foreground border-border' },
 }
 
 function KanbanMockup() {
@@ -222,7 +232,7 @@ function FeaturedCard({ project, isInView }: { project: Project; isInView: boole
 
           {/* Links */}
           <div className="flex items-center gap-4 pt-4 border-t border-border/50">
-            {project.github && (
+            {project.github && project.github !== '#' && (
               <motion.a
                 href={project.github}
                 target="_blank"
@@ -234,7 +244,7 @@ function FeaturedCard({ project, isInView }: { project: Project; isInView: boole
                 {t('projects.github')}
               </motion.a>
             )}
-            {project.live && (
+            {project.live && project.live !== '#' && (
               <motion.a
                 href={project.live}
                 target="_blank"
@@ -274,7 +284,7 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
     y.set(0)
   }
 
-  const isAutomation = !!project.caseStudy
+  const isAutomation = !!project.isAutomation
 
   return (
     <motion.article
@@ -286,7 +296,7 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
       onMouseLeave={handleMouseLeave}
       className={`project-card group rounded-2xl border p-6 transition-all duration-300 hover:border-[var(--accent-border)] ${
         isAutomation
-          ? 'border-purple-500/20 bg-purple-500/5 hover:border-purple-500/40'
+          ? 'border-amber-500/20 bg-amber-500/5 hover:border-amber-500/40'
           : 'border-border bg-card'
       }`}
     >
@@ -294,7 +304,7 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
       <div className="flex items-start justify-between gap-2 mb-4">
         <div className="flex flex-wrap gap-1.5">
           {isAutomation && (
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/30 text-xs font-medium">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs font-medium">
               <Zap className="w-3 h-3" />
               {t('projects.case_study_label')}
             </span>
@@ -328,7 +338,7 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
 
       {/* Links */}
       <div className="flex items-center gap-4 pt-4 border-t border-border/50">
-        {project.github && (
+        {project.github && project.github !== '#' && (
           <a
             href={project.github}
             target="_blank"
@@ -339,7 +349,7 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
             {t('projects.github')}
           </a>
         )}
-        {project.live && (
+        {project.live && project.live !== '#' && (
           <a
             href={project.live}
             target="_blank"
@@ -353,7 +363,7 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
         {isAutomation && (
           <a
             href="#"
-            className="inline-flex items-center gap-1.5 text-xs text-purple-400 hover:text-purple-300 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-300 transition-colors"
           >
             <Zap className="w-3.5 h-3.5" />
             {t('projects.view_case')}

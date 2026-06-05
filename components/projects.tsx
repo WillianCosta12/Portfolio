@@ -1,5 +1,6 @@
 'use client'
 
+import type { ComponentType } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { ExternalLink, Github, ArrowUpRight, Zap, Star } from 'lucide-react'
@@ -21,109 +22,98 @@ interface Project {
   featured?: boolean
   status: ProjectStatus
   isAutomation?: boolean
+  cover?: ComponentType
 }
+
+// ─── Project Covers ───────────────────────────────────────────────────────────
+
+function StephenKingCover() {
+  return (
+    <svg
+      viewBox="0 0 380 240"
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-full h-full"
+      aria-hidden="true"
+    >
+      <defs>
+        <filter id="sk-noise" x="0%" y="0%" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" seed="7" result="noise" />
+          <feColorMatrix type="saturate" values="0" in="noise" />
+        </filter>
+        <radialGradient id="sk-vignette" cx="50%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
+          <stop offset="35%" stopColor="transparent" />
+          <stop offset="100%" stopColor="#000" stopOpacity="0.65" />
+        </radialGradient>
+        <radialGradient id="sk-glow" cx="50%" cy="0%" r="60%" gradientUnits="objectBoundingBox">
+          <stop offset="0%" stopColor="rgb(139,28,28)" stopOpacity="0.08" />
+          <stop offset="100%" stopColor="rgb(139,28,28)" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+
+      {/* Base */}
+      <rect width="380" height="240" fill="#0C0C0C" />
+      {/* Atmospheric red glow */}
+      <rect width="380" height="240" fill="url(#sk-glow)" />
+
+      {/* Background decorative "85" */}
+      <text x="356" y="232" fontFamily="Georgia, serif" fontSize="196" fontWeight="900" fill="rgb(22,22,22)" textAnchor="end">85</text>
+
+      {/* Ornamental header line */}
+      <line x1="26" y1="28" x2="104" y2="28" stroke="rgb(110,104,95)" strokeWidth="0.5" />
+      <text x="190" y="32" fontFamily="'Courier New', monospace" fontSize="6" fill="rgb(110,104,95)" textAnchor="middle" letterSpacing="3.5">CONSTANT READER</text>
+      <line x1="276" y1="28" x2="354" y2="28" stroke="rgb(110,104,95)" strokeWidth="0.5" />
+
+      {/* Title — "Stephen" */}
+      <text x="28" y="108" fontFamily="Georgia, 'Times New Roman', serif" fontSize="52" fontWeight="900" fontStyle="italic" fill="rgb(226,222,213)" letterSpacing="-0.5">Stephen</text>
+
+      {/* Title — "King" */}
+      <text x="26" y="168" fontFamily="Georgia, 'Times New Roman', serif" fontSize="70" fontWeight="900" fontStyle="italic" fill="rgb(180,44,44)" letterSpacing="-1">King</text>
+
+      {/* Separator */}
+      <line x1="26" y1="177" x2="180" y2="177" stroke="rgb(139,28,28)" strokeWidth="0.7" strokeOpacity="0.6" />
+
+      {/* Subtitle */}
+      <text x="26" y="197" fontFamily="'Courier New', monospace" fontSize="8" fill="rgb(226,222,213)" letterSpacing="5">CHECKLIST DO LEITOR</text>
+
+      {/* Stack tags */}
+      <text x="26" y="219" fontFamily="'Courier New', monospace" fontSize="5.5" fill="rgb(110,104,95)" letterSpacing="1.5">Next.js · Supabase · TypeScript · Framer Motion</text>
+
+      {/* Grain overlay */}
+      <rect width="380" height="240" filter="url(#sk-noise)" opacity="0.05" />
+      {/* Vignette */}
+      <rect width="380" height="240" fill="url(#sk-vignette)" />
+    </svg>
+  )
+}
+
+// ─── Projects Data ────────────────────────────────────────────────────────────
 
 const projects: Project[] = [
   {
-    id: 'flowapp',
-    title: 'FlowApp',
-    subtitle: 'Landing page · App de produtividade',
-    subtitleEn: 'Landing page · Productivity App',
+    id: 'stephen-king',
+    title: 'Stephen King',
+    subtitle: 'Checklist do Leitor',
+    subtitleEn: 'Reader Checklist',
     description:
-      'Landing page de alto impacto para um app fictício de produtividade. Hero com mockup 3D de celular, scroll storytelling por seção e Lighthouse 100.',
+      'Aplicação full-stack para fãs acompanharem sua leitura da obra completa do Stephen King. 85 títulos, progresso por usuário, sistema de badges de conquistas e animações detalhadas.',
     descriptionEn:
-      'High-impact landing page for a fictional productivity app. 3D phone mockup hero, section-by-section scroll storytelling and perfect Lighthouse score.',
+      "Full-stack app for fans to track their reading of Stephen King's complete works. 85 titles, per-user progress, achievement badge system and detailed animations.",
     stack: [
-      { name: 'React',         category: 'frontend' },
+      { name: 'Next.js 15',    category: 'frontend' },
       { name: 'TypeScript',    category: 'frontend' },
       { name: 'Tailwind CSS',  category: 'frontend' },
       { name: 'Framer Motion', category: 'frontend' },
-    ],
-    github: 'https://github.com/WillianCosta12',
-    live: '#',
-    featured: true,
-    status: 'wip',
-  },
-  {
-    id: 'velour',
-    title: 'Velour',
-    subtitle: 'E-commerce · Moda',
-    subtitleEn: 'E-commerce · Fashion',
-    description:
-      'E-commerce completo de moda com lookbook editorial, filtro por cor e tamanho, wishlist, carrinho, checkout e autenticação JWT.',
-    descriptionEn:
-      'Full-featured fashion e-commerce with editorial lookbook, color and size filters, wishlist, cart, checkout and JWT auth.',
-    stack: [
-      { name: 'React',        category: 'frontend' },
-      { name: 'Node.js',      category: 'backend'  },
-      { name: 'PostgreSQL',   category: 'backend'  },
-      { name: 'JWT',          category: 'backend'  },
-      { name: 'Tailwind CSS', category: 'frontend' },
-    ],
-    github: 'https://github.com/WillianCosta12',
-    live: '#',
-    status: 'wip',
-  },
-  {
-    id: 'flowmoney',
-    title: 'FlowMoney',
-    subtitle: 'Dashboard · Finanças pessoais',
-    subtitleEn: 'Dashboard · Personal Finance',
-    description:
-      'Controle financeiro pessoal com cadastro de receitas e despesas por categoria, gráficos mensais, metas de gastos e histórico anual.',
-    descriptionEn:
-      'Personal finance tracker with income and expense categories, monthly charts, spending goals and annual history.',
-    stack: [
-      { name: 'React',       category: 'frontend' },
-      { name: 'Spring Boot', category: 'backend'  },
-      { name: 'PostgreSQL',  category: 'backend'  },
-      { name: 'Recharts',    category: 'frontend' },
-      { name: 'JWT',         category: 'backend'  },
-    ],
-    github: 'https://github.com/WillianCosta12',
-    live: '#',
-    status: 'wip',
-  },
-  {
-    id: 'spacenow',
-    title: 'SpaceNow',
-    subtitle: 'Integração · NASA APIs',
-    subtitleEn: 'API Integration · NASA',
-    description:
-      'Explorador de dados espaciais em tempo real. Foto astronômica do dia, galeria do Rover em Marte e rastreamento ao vivo da Estação Espacial Internacional.',
-    descriptionEn:
-      'Real-time space data explorer. Astronomy picture of the day, Mars Rover photo gallery and live ISS tracking.',
-    stack: [
-      { name: 'React',      category: 'frontend' },
-      { name: 'TypeScript', category: 'frontend' },
-      { name: 'NASA API',   category: 'infra'    },
-      { name: 'Tailwind',   category: 'frontend' },
-    ],
-    github: 'https://github.com/WillianCosta12',
-    live: '#',
-    status: 'wip',
-  },
-  {
-    id: 'automacao',
-    title: 'Automação de Processos',
-    subtitle: 'Case Study · n8n + Make',
-    subtitleEn: 'Case Study · n8n + Make',
-    description:
-      'Documentação técnica de automações reais implantadas em empresa do ecossistema contábil e jurídico — integrando ERPs, planilhas e APIs de gestão.',
-    descriptionEn:
-      'Technical documentation of real automations deployed in accounting and legal companies — integrating ERPs, spreadsheets and management APIs.',
-    stack: [
-      { name: 'n8n',       category: 'tools'   },
-      { name: 'Make',      category: 'tools'   },
-      { name: 'Node.js',   category: 'backend' },
-      { name: 'REST APIs', category: 'backend' },
+      { name: 'Supabase',      category: 'backend'  },
     ],
     github: '#',
     live: '#',
-    status: 'done',
-    isAutomation: true,
+    featured: true,
+    status: 'wip',
+    cover: StephenKingCover,
   },
 ]
+
+// ─── Styles ───────────────────────────────────────────────────────────────────
 
 const stackColors: Record<StackCategory, string> = {
   frontend: 'bg-[var(--accent-muted)] text-[var(--accent)] border-[var(--accent-border)]',
@@ -133,16 +123,18 @@ const stackColors: Record<StackCategory, string> = {
 }
 
 const statusConfig: Record<ProjectStatus, { label: string; key: string; className: string }> = {
-  done: { label: 'done', key: 'projects.done', className: 'bg-[var(--accent-muted)] text-[var(--accent)] border-[var(--accent-border)]' },
-  wip: { label: 'wip', key: 'projects.wip', className: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30' },
+  done:    { label: 'done',    key: 'projects.done',    className: 'bg-[var(--accent-muted)] text-[var(--accent)] border-[var(--accent-border)]' },
+  wip:     { label: 'wip',     key: 'projects.wip',     className: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30' },
   concept: { label: 'concept', key: 'projects.concept', className: 'bg-secondary text-muted-foreground border-border' },
 }
 
+// ─── KanbanMockup (fallback cover) ────────────────────────────────────────────
+
 function KanbanMockup() {
   const cols = [
-    { label: 'To Do', items: 2 },
-    { label: 'In Progress', items: 3, accent: true },
-    { label: 'Done', items: 2 },
+    { label: 'To Do',        items: 2 },
+    { label: 'In Progress',  items: 3, accent: true },
+    { label: 'Done',         items: 2 },
   ]
   return (
     <div className="grid grid-cols-3 gap-2 p-4 h-full min-h-[180px] rounded-xl bg-card/50">
@@ -167,11 +159,15 @@ function KanbanMockup() {
   )
 }
 
+// ─── FeaturedCard ─────────────────────────────────────────────────────────────
+
 function FeaturedCard({ project, isInView }: { project: Project; isInView: boolean }) {
   const { t, i18n } = useTranslation()
   const isEn = i18n.language === 'en'
   const desc     = isEn && project.descriptionEn ? project.descriptionEn : project.description
   const subtitle = isEn && project.subtitleEn    ? project.subtitleEn    : project.subtitle
+  const Cover    = project.cover
+
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const rotateX = useSpring(useTransform(y, [-100, 100], [4, -4]), { stiffness: 300, damping: 30 })
@@ -198,12 +194,12 @@ function FeaturedCard({ project, isInView }: { project: Project; isInView: boole
       style={{ rotateX, rotateY, transformPerspective: 1200 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="project-card group rounded-2xl border border-border bg-card hover:border-[var(--accent-border)] transition-all duration-300"
+      className="project-card group rounded-2xl border border-border bg-card hover:border-[var(--accent-border)] transition-all duration-300 overflow-hidden"
     >
       <div className="grid lg:grid-cols-[1fr_1.2fr] gap-0">
-        {/* Mockup side */}
-        <div className="p-6 lg:border-r border-border">
-          <KanbanMockup />
+        {/* Cover / Mockup side */}
+        <div className={`lg:border-r border-border ${Cover ? '' : 'p-6'}`}>
+          {Cover ? <Cover /> : <KanbanMockup />}
         </div>
 
         {/* Content side */}
@@ -272,6 +268,8 @@ function FeaturedCard({ project, isInView }: { project: Project; isInView: boole
     </motion.article>
   )
 }
+
+// ─── ProjectCard ──────────────────────────────────────────────────────────────
 
 function ProjectCard({ project, index, isInView }: { project: Project; index: number; isInView: boolean }) {
   const { t, i18n } = useTranslation()
@@ -344,9 +342,7 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
       <h3 className="font-display text-xl font-semibold text-foreground mb-2 group-hover:text-[var(--accent)] transition-colors">
         {project.title}
       </h3>
-      <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-        {desc}
-      </p>
+      <p className="text-muted-foreground text-sm leading-relaxed mb-6">{desc}</p>
 
       {/* Links */}
       <div className="flex items-center gap-4 pt-4 border-t border-border/50">
@@ -386,12 +382,14 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
   )
 }
 
+// ─── Section ──────────────────────────────────────────────────────────────────
+
 export function Projects() {
   const { t } = useTranslation()
   const { ref, isInView } = useIntersectionObserver<HTMLElement>({ threshold: 0.05 })
 
-  const featuredProject = projects.find((p) => p.featured)!
-  const gridProjects = projects.filter((p) => !p.featured)
+  const featuredProject = projects.find((p) => p.featured)
+  const gridProjects    = projects.filter((p) => !p.featured)
 
   return (
     <section
@@ -419,21 +417,39 @@ export function Projects() {
         </motion.div>
 
         {/* Featured project */}
-        <div className="mb-6">
-          <FeaturedCard project={featuredProject} isInView={isInView} />
-        </div>
+        {featuredProject && (
+          <div className="mb-6">
+            <FeaturedCard project={featuredProject} isInView={isInView} />
+          </div>
+        )}
 
         {/* Grid of remaining projects */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {gridProjects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={index}
-              isInView={isInView}
-            />
-          ))}
-        </div>
+        {gridProjects.length > 0 && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {gridProjects.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                isInView={isInView}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Empty state */}
+        {projects.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex flex-col items-center justify-center py-24 gap-4 text-center"
+          >
+            <p className="text-muted-foreground text-sm font-mono">
+              // projetos em construção — em breve
+            </p>
+          </motion.div>
+        )}
       </div>
     </section>
   )

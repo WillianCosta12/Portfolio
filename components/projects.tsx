@@ -233,6 +233,69 @@ function RivalRadarCover() {
   )
 }
 
+function RivalRadarLPCover() {
+  return (
+    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
+      <defs>
+        <radialGradient id="rl-vig" cx="50%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
+          <stop offset="30%" stopColor="transparent" />
+          <stop offset="100%" stopColor="#000" stopOpacity="0.65" />
+        </radialGradient>
+        <radialGradient id="rl-glow" cx="70%" cy="40%" r="45%" gradientUnits="objectBoundingBox">
+          <stop offset="0%"   stopColor="#C6F24E" stopOpacity="0.07" />
+          <stop offset="100%" stopColor="#C6F24E" stopOpacity="0"    />
+        </radialGradient>
+      </defs>
+
+      <rect width="380" height="240" fill="#070A04" />
+      <rect width="380" height="240" fill="url(#rl-glow)" />
+
+      {/* Browser frame */}
+      <rect x="196" y="18" width="162" height="115" rx="5" fill="#0D1106" stroke="#C6F24E" strokeWidth="0.5" strokeOpacity="0.22" />
+      <rect x="196" y="18" width="162" height="15" rx="5" fill="#C6F24E" fillOpacity="0.06" />
+      <line x1="196" y1="33" x2="358" y2="33" stroke="#C6F24E" strokeWidth="0.4" strokeOpacity="0.18" />
+      {/* Traffic lights */}
+      <circle cx="207" cy="25.5" r="2.5" fill="#C6F24E" fillOpacity="0.3" />
+      <circle cx="215" cy="25.5" r="2.5" fill="#C6F24E" fillOpacity="0.18" />
+      <circle cx="223" cy="25.5" r="2.5" fill="#C6F24E" fillOpacity="0.1" />
+      {/* URL bar */}
+      <rect x="233" y="21" width="115" height="9" rx="2" fill="#C6F24E" fillOpacity="0.07" stroke="#C6F24E" strokeWidth="0.3" strokeOpacity="0.15" />
+      <text x="290" y="27.5" fontFamily="'Courier New',monospace" fontSize="4.8" fill="#C6F24E" fillOpacity="0.35" textAnchor="middle">rival-radar-lp.vercel.app</text>
+
+      {/* LP content — hero headline */}
+      <rect x="208" y="42" width="130" height="9"  rx="2" fill="#C6F24E" fillOpacity="0.28" />
+      <rect x="208" y="55" width="100" height="6"  rx="2" fill="#C6F24E" fillOpacity="0.12" />
+      <rect x="208" y="64" width="114" height="6"  rx="2" fill="#C6F24E" fillOpacity="0.08" />
+      {/* Email input + CTA button */}
+      <rect x="208" y="80" width="84"  height="13" rx="3" fill="none" stroke="#C6F24E" strokeWidth="0.5" strokeOpacity="0.25" />
+      <rect x="297" y="80" width="51"  height="13" rx="3" fill="#C6F24E" fillOpacity="0.2" stroke="#C6F24E" strokeWidth="0.5" strokeOpacity="0.4" />
+      <text x="322" y="88.5" fontFamily="'Courier New',monospace" fontSize="5" fill="#C6F24E" fillOpacity="0.7" textAnchor="middle">ENTRAR</text>
+      {/* Social proof bar */}
+      <line x1="208" y1="105" x2="348" y2="105" stroke="#C6F24E" strokeWidth="0.3" strokeOpacity="0.12" />
+      <rect x="208" y="109" width="62" height="5" rx="1.5" fill="#C6F24E" fillOpacity="0.1" />
+      <rect x="278" y="109" width="50" height="5" rx="1.5" fill="#C6F24E" fillOpacity="0.07" />
+
+      {/* Top label */}
+      <line x1="26" y1="28" x2="80"  y2="28" stroke="#2D3B1A" strokeWidth="0.5" />
+      <text x="190" y="32" fontFamily="'Courier New',monospace" fontSize="6" fill="#4A6024" textAnchor="middle" letterSpacing="3">LANDING PAGE · LIVE</text>
+      <line x1="300" y1="28" x2="354" y2="28" stroke="#2D3B1A" strokeWidth="0.5" />
+
+      {/* Title */}
+      <text x="26" y="158" fontFamily="'Space Grotesk',sans-serif" fontSize="40" fontWeight="900" fill="#EAF8C0" letterSpacing="-1">Rival</text>
+      <text x="26" y="194" fontFamily="'Space Grotesk',sans-serif" fontSize="40" fontWeight="900" fill="#C6F24E" letterSpacing="-1">Radar</text>
+      <text x="26" y="212" fontFamily="'Courier New',monospace" fontSize="7" fill="#C6F24E" fillOpacity="0.55" letterSpacing="3">/ LANDING PAGE</text>
+
+      {/* Separator */}
+      <line x1="26" y1="220" x2="148" y2="220" stroke="#C6F24E" strokeWidth="0.4" strokeOpacity="0.35" />
+
+      {/* Stack */}
+      <text x="26" y="233" fontFamily="'Courier New',monospace" fontSize="5.5" fill="#4A6024" letterSpacing="1.5">Next.js 15 · Supabase · Resend · Vercel</text>
+
+      <rect width="380" height="240" fill="url(#rl-vig)" />
+    </svg>
+  )
+}
+
 function ClubeCafeCover() {
   return (
     <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
@@ -580,6 +643,29 @@ const projects: Project[] = [
     status: 'done',
     isAutomation: true,
     cover: AutomacaoCover,
+  },
+  {
+    id: 'rival-radar-lp',
+    title: 'RivalRadar — Landing Page',
+    subtitle: 'Landing page de validação de produto',
+    subtitleEn: 'Product validation landing page',
+    description:
+      'Landing page de captação de leads com 13 seções construída do zero: radar animado (requestAnimationFrame), spotlight cards com mouse tracking, dashboard admin protegido com export CSV, notificações Resend + Slack a cada cadastro, A/B test de headline via Plausible e OG image dinâmica com next/og. Backend com validação Zod e Supabase RLS.',
+    descriptionEn:
+      'Lead-capture landing page with 13 sections built from scratch: animated radar (requestAnimationFrame), spotlight cards with mouse tracking, protected admin dashboard with CSV export, Resend + Slack notifications per signup, headline A/B test via Plausible and dynamic OG image with next/og. Backend with Zod validation and Supabase RLS.',
+    stack: [
+      { name: 'Next.js 15',   category: 'frontend' },
+      { name: 'TypeScript',   category: 'frontend' },
+      { name: 'Tailwind CSS', category: 'frontend' },
+      { name: 'Supabase',     category: 'backend'  },
+      { name: 'Resend',       category: 'backend'  },
+      { name: 'Vercel',       category: 'infra'    },
+    ],
+    github: 'https://github.com/WillianCosta12/Landing-Page---Rival-Radar',
+    live: 'https://rival-radar-lp.vercel.app',
+    featured: false,
+    status: 'done',
+    cover: RivalRadarLPCover,
   },
   {
     id: 'rival-radar',

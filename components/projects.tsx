@@ -29,7 +29,7 @@ interface Project {
 
 function JarvisCover() {
   return (
-    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
+    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <radialGradient id="jr-orb" cx="71%" cy="44%" r="38%" gradientUnits="objectBoundingBox">
           <stop offset="0%"   stopColor="#00E5FF" stopOpacity="0.22" />
@@ -113,7 +113,7 @@ function AutomacaoCover() {
   ]
   const edges = [[0,1],[1,2],[0,3],[1,3],[1,4],[2,5],[3,4],[4,5],[4,6]]
   return (
-    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
+    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <radialGradient id="at-vig" cx="50%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
           <stop offset="30%" stopColor="transparent" />
@@ -170,7 +170,7 @@ function AutomacaoCover() {
 function RivalRadarCover() {
   const cx = 290; const cy = 100
   return (
-    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
+    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <radialGradient id="rr-vig" cx="50%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
           <stop offset="30%" stopColor="transparent" />
@@ -235,7 +235,7 @@ function RivalRadarCover() {
 
 function ClubeCafeCover() {
   return (
-    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
+    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <radialGradient id="cc-vig" cx="50%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
           <stop offset="30%" stopColor="transparent" />
@@ -294,7 +294,7 @@ function MEIfaturaCover() {
     [3,2],[3,3],[4,3],[5,3],[4,1],
   ]
   return (
-    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
+    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <radialGradient id="mf-vig" cx="50%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
           <stop offset="30%" stopColor="transparent" />
@@ -343,7 +343,7 @@ function MEIfaturaCover() {
 
 function RuleSyncCover() {
   return (
-    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
+    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <radialGradient id="rs-vig" cx="50%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
           <stop offset="30%" stopColor="transparent" />
@@ -388,7 +388,7 @@ function RuleSyncCover() {
 
 function EditalFlashCover() {
   return (
-    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
+    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <radialGradient id="ef-vig" cx="50%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
           <stop offset="30%" stopColor="transparent" />
@@ -441,7 +441,7 @@ function EditalFlashCover() {
 function NormaWatchCover() {
   const pulsePoints = "80,108 100,108 112,88 124,128 136,98 148,118 160,108 180,108"
   return (
-    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
+    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <radialGradient id="nw-vig" cx="50%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
           <stop offset="30%" stopColor="transparent" />
@@ -497,7 +497,7 @@ function NormaWatchCover() {
 
 function StephenKingCover() {
   return (
-    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
+    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <filter id="sk-noise" x="0%" y="0%" width="100%" height="100%">
           <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" seed="7" result="noise" />
@@ -813,7 +813,7 @@ function FeaturedCard({ project, isInView }: { project: Project; isInView: boole
     >
       <div className="grid lg:grid-cols-[1fr_1.2fr] gap-0">
         {/* Cover side */}
-        <div className={`lg:border-r border-border ${Cover ? '' : 'p-6'}`}>
+        <div className={`lg:border-r border-border overflow-hidden min-h-[240px] ${Cover ? '' : 'p-6'}`}>
           {Cover ? <Cover /> : <KanbanMockup />}
         </div>
 
@@ -904,7 +904,7 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
     >
       {/* Cover thumbnail */}
       {Cover && (
-        <div className="border-b border-border/50 overflow-hidden" style={{ height: 140 }}>
+        <div className="border-b border-border/50 overflow-hidden" style={{ height: 180 }}>
           <Cover />
         </div>
       )}

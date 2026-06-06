@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowRight, Github, Linkedin, Instagram, Mail, Terminal } from 'lucide-react'
+import { ArrowRight, Download, Github, Linkedin, Instagram, Mail, Terminal } from 'lucide-react'
 import { useTypewriter } from '@/hooks/use-typewriter'
 
 const socialLinks = [
@@ -235,6 +235,16 @@ export function Hero() {
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border-2 border-border text-foreground font-semibold text-sm hover:border-[var(--accent-border)] hover:text-[var(--accent)] transition-all"
               >
                 {t('hero.cta_contact')}
+              </motion.a>
+              <motion.a
+                href="/willian-costa-cv.pdf"
+                download
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border-2 border-border text-foreground font-semibold text-sm hover:border-[var(--accent-border)] hover:text-[var(--accent)] transition-all"
+              >
+                <Download className="w-4 h-4" />
+                {t('hero.cta_cv')}
               </motion.a>
             </motion.div>
 

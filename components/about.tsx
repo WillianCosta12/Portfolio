@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Instagram, Mail, MapPin, Zap, Code2, Briefcase, TrendingUp } from 'lucide-react'
+import { Github, Linkedin, Instagram, Mail, Download, MapPin, Zap, Code2, Briefcase, TrendingUp } from 'lucide-react'
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer'
 import { useCountUp } from '@/hooks/use-count-up'
 
@@ -206,7 +206,7 @@ export function About() {
                   {t('about.bio')}
                 </p>
               </div>
-              <div className="flex items-center gap-2 pt-4 border-t border-border">
+              <div className="flex items-center gap-2 pt-4 border-t border-border flex-wrap">
                 {socialLinks.map((link) => (
                   <motion.a
                     key={link.label}
@@ -221,6 +221,16 @@ export function About() {
                     <link.icon className="w-4 h-4" />
                   </motion.a>
                 ))}
+                <motion.a
+                  href="/willian-costa-cv.pdf"
+                  download
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="ml-auto inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--accent-border)] bg-[var(--accent-muted)] text-[var(--accent)] text-xs font-semibold hover:bg-[var(--accent)] hover:text-primary-foreground transition-all"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  {t('hero.cta_cv')}
+                </motion.a>
               </div>
             </div>
           </BentoCard>

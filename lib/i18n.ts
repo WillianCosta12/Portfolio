@@ -17,6 +17,7 @@ const resources = {
           'Do mapeamento de processo ao deploy em produção. Atuo ponta a ponta em automações, integrações e desenvolvimento web para empresas que precisam sair do operacional manual.',
         cta_projects: 'Ver Projetos',
         cta_contact: 'Fale Comigo',
+        cta_cv: 'Download CV',
       },
       about: {
         label: 'Sobre',
@@ -84,6 +85,7 @@ const resources = {
           'From process mapping to production deploy. I work end-to-end on automation, integrations, and web development for businesses that need to move beyond manual operations.',
         cta_projects: 'View Projects',
         cta_contact: 'Get in Touch',
+        cta_cv: 'Download CV',
       },
       about: {
         label: 'About',

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 
 const inter = Inter({
@@ -56,6 +57,7 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  metadataBase: new URL('https://williancosta.vercel.app'),
 }
 
 export const viewport: Viewport = {
@@ -81,6 +83,7 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased bg-background text-foreground">
         {children}
+        <Analytics />
       </body>
     </html>
   )

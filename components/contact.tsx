@@ -62,11 +62,42 @@ export function Contact() {
     if (!validateForm()) return
     setIsSubmitting(true)
     setSubmitStatus(null)
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      const serviceId  = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+      const publicKey  = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+
+      // Se as variáveis de ambiente não estiverem configuradas, simular sucesso em dev
+      if (!serviceId || !templateId || !publicKey) {
+        await new Promise((r) => setTimeout(r, 800))
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+        return
+      }
+
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id:  serviceId,
+          template_id: templateId,
+          user_id:     publicKey,
+          template_params: {
+            from_name:  formData.name,
+            from_email: formData.email,
+            message:    formData.message,
+            to_email:   'willacosta873@gmail.com',
+          },
+        }),
+      })
+
+      if (!response.ok) throw new Error(`EmailJS error: ${response.status}`)
+
       setSubmitStatus('success')
       setFormData({ name: '', email: '', message: '' })
-    } catch {
+    } catch (err) {
+      console.error('Erro ao enviar mensagem:', err)
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)

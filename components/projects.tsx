@@ -881,12 +881,18 @@ function FeaturedCard({ project, isInView }: { project: Project; isInView: boole
   const rotateX = useSpring(useTransform(y, [-100, 100], [4, -4]), { stiffness: 300, damping: 30 })
   const rotateY = useSpring(useTransform(x, [-100, 100], [-4, 4]), { stiffness: 300, damping: 30 })
 
+  const isClickable = project.status === 'done' && !!project.live && project.live !== '#'
+  const handleCardClick = () => {
+    if (isClickable && project.live) window.open(project.live, '_blank', 'noopener,noreferrer')
+  }
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       style={{ rotateX, rotateY, transformPerspective: 1200 }}
+      onClick={isClickable ? handleCardClick : undefined}
       onMouseMove={(e) => {
         const r = e.currentTarget.getBoundingClientRect()
         x.set(e.clientX - r.left - r.width / 2)
@@ -895,7 +901,7 @@ function FeaturedCard({ project, isInView }: { project: Project; isInView: boole
         e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - r.top}px`)
       }}
       onMouseLeave={() => { x.set(0); y.set(0) }}
-      className="project-card group rounded-2xl border border-border bg-card hover:border-[var(--accent-border)] transition-all duration-300 overflow-hidden"
+      className={`project-card group rounded-2xl border border-border bg-card hover:border-[var(--accent-border)] transition-all duration-300 overflow-hidden ${isClickable ? 'cursor-pointer' : ''}`}
     >
       <div className="grid lg:grid-cols-[1fr_1.2fr] gap-0">
         {/* Cover side */}
@@ -934,12 +940,14 @@ function FeaturedCard({ project, isInView }: { project: Project; isInView: boole
           <div className="flex items-center gap-4 pt-4 border-t border-border/50">
             {project.github && project.github !== '#' && (
               <motion.a href={project.github} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.05 }}
+                onClick={(e) => e.stopPropagation()}
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-[var(--accent)] transition-colors">
                 <Github className="w-4 h-4" />{t('projects.github')}
               </motion.a>
             )}
             {project.live && project.live !== '#' && (
               <motion.a href={project.live} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.05 }}
+                onClick={(e) => e.stopPropagation()}
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-[var(--accent)] transition-colors">
                 <ExternalLink className="w-4 h-4" />{t('projects.live')}
               </motion.a>
@@ -967,6 +975,10 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
   const rotateY = useSpring(useTransform(x, [-100, 100], [-8, 8]), { stiffness: 300, damping: 30 })
 
   const isAuto = !!project.isAutomation
+  const isClickable = project.status === 'done' && !!project.live && project.live !== '#'
+  const handleCardClick = () => {
+    if (isClickable && project.live) window.open(project.live, '_blank', 'noopener,noreferrer')
+  }
 
   return (
     <motion.article
@@ -974,6 +986,7 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.08 }}
       style={{ rotateX, rotateY, transformPerspective: 1000 }}
+      onClick={isClickable ? handleCardClick : undefined}
       onMouseMove={(e) => {
         const r = e.currentTarget.getBoundingClientRect()
         x.set(e.clientX - r.left - r.width / 2)
@@ -986,7 +999,7 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
         isAuto
           ? 'border-amber-500/20 bg-amber-500/5 hover:border-amber-500/40'
           : 'border-border bg-card hover:border-[var(--accent-border)]'
-      }`}
+      } ${isClickable ? 'cursor-pointer' : ''}`}
     >
       {/* Cover thumbnail */}
       {Cover && (
@@ -1035,12 +1048,14 @@ function ProjectCard({ project, index, isInView }: { project: Project; index: nu
         <div className="flex items-center gap-4 pt-4 border-t border-border/50">
           {project.github && project.github !== '#' && (
             <a href={project.github} target="_blank" rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
               className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-[var(--accent)] transition-colors">
               <Github className="w-3.5 h-3.5" />{t('projects.github')}
             </a>
           )}
           {project.live && project.live !== '#' && (
             <a href={project.live} target="_blank" rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
               className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-[var(--accent)] transition-colors">
               <ExternalLink className="w-3.5 h-3.5" />{t('projects.live')}
             </a>

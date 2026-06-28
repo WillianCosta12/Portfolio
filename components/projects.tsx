@@ -728,10 +728,10 @@ const projects: Project[] = [
       { name: 'Framer Motion', category: 'frontend' },
       { name: 'Supabase',      category: 'backend'  },
     ],
-    github: '#',
-    live: '#',
+    github: 'https://github.com/WillianCosta12/StephenKing-CheckList',
+    live: 'https://stephenking-checklist.vercel.app',
     featured: false,
-    status: 'wip',
+    status: 'done',
     cover: StephenKingCover,
   },
   {

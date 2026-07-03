@@ -558,6 +558,63 @@ function NormaWatchCover() {
   )
 }
 
+function FerrariCover() {
+  return (
+    <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
+      <defs>
+        <radialGradient id="fr-vig" cx="50%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
+          <stop offset="30%" stopColor="transparent" />
+          <stop offset="100%" stopColor="#000" stopOpacity="0.7" />
+        </radialGradient>
+        <radialGradient id="fr-glow" cx="70%" cy="50%" r="55%" gradientUnits="objectBoundingBox">
+          <stop offset="0%"   stopColor="#CC0000" stopOpacity="0.14" />
+          <stop offset="100%" stopColor="#CC0000" stopOpacity="0"    />
+        </radialGradient>
+        <linearGradient id="fr-line" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stopColor="#CC0000" stopOpacity="0" />
+          <stop offset="30%"  stopColor="#CC0000" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="#CC0000" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+
+      <rect width="380" height="240" fill="#0A0000" />
+      <rect width="380" height="240" fill="url(#fr-glow)" />
+
+      {/* Speed lines — horizontal streaks from right */}
+      <line x1="160" y1="72"  x2="380" y2="72"  stroke="#CC0000" strokeWidth="0.4" strokeOpacity="0.18" />
+      <line x1="200" y1="80"  x2="380" y2="80"  stroke="#CC0000" strokeWidth="0.6" strokeOpacity="0.28" />
+      <line x1="180" y1="88"  x2="380" y2="88"  stroke="#CC0000" strokeWidth="0.3" strokeOpacity="0.14" />
+      <line x1="220" y1="96"  x2="380" y2="96"  stroke="#CC0000" strokeWidth="0.5" strokeOpacity="0.2"  />
+      <line x1="190" y1="104" x2="380" y2="104" stroke="#CC0000" strokeWidth="0.3" strokeOpacity="0.12" />
+
+      {/* Vertical accent line */}
+      <line x1="26" y1="44" x2="26" y2="196" stroke="#CC0000" strokeWidth="1.2" strokeOpacity="0.7" />
+
+      {/* Top label */}
+      <line x1="36"  y1="28" x2="80"  y2="28" stroke="#3D0000" strokeWidth="0.5" />
+      <text x="190" y="32" fontFamily="'Courier New',monospace" fontSize="6" fill="#7A1010" textAnchor="middle" letterSpacing="4">REDESIGN CONCEITUAL · NON UFFICIALE</text>
+      <line x1="300" y1="28" x2="354" y2="28" stroke="#3D0000" strokeWidth="0.5" />
+
+      {/* Main wordmark */}
+      <text x="38" y="130" fontFamily="'Georgia','Times New Roman',serif" fontSize="68" fontWeight="900" fill="#F5E6D0" letterSpacing="-1" fontStyle="italic">Ferrari</text>
+
+      {/* Red accent line below wordmark */}
+      <rect x="38" y="138" width="200" height="1.5" fill="url(#fr-line)" />
+
+      {/* Italian subtitle */}
+      <text x="38" y="158" fontFamily="'Courier New',monospace" fontSize="8" fill="#CC0000" letterSpacing="5">VELOCITÀ È EREDITÀ</text>
+
+      {/* Maranello year */}
+      <text x="38" y="178" fontFamily="'Courier New',monospace" fontSize="6" fill="#5C1010" letterSpacing="2">Maranello, 1947.</text>
+
+      {/* Stack */}
+      <text x="38" y="220" fontFamily="'Courier New',monospace" fontSize="5.5" fill="#5C1010" letterSpacing="1.5">Next.js · GSAP · Framer Motion · Vercel</text>
+
+      <rect width="380" height="240" fill="url(#fr-vig)" />
+    </svg>
+  )
+}
+
 function StephenKingCover() {
   return (
     <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
@@ -666,6 +723,28 @@ const projects: Project[] = [
     featured: false,
     status: 'done',
     cover: RivalRadarLPCover,
+  },
+  {
+    id: 'ferrari-redesign',
+    title: 'Ferrari — Redesign',
+    subtitle: 'Direção criativa · Motion · Frontend',
+    subtitleEn: 'Creative direction · Motion · Frontend',
+    description:
+      'Redesign conceitual não-oficial do site da Ferrari. Projeto de portfólio com scroll narrativo, tipografia editorial italiana, seções de história, lendas e ícones. Exercício completo de direção criativa, design e motion.',
+    descriptionEn:
+      'Unofficial conceptual redesign of the Ferrari website. Portfolio project with narrative scroll, Italian editorial typography, and sections covering history, legends and icons. A full creative direction, design and motion exercise.',
+    stack: [
+      { name: 'Next.js',       category: 'frontend' },
+      { name: 'TypeScript',    category: 'frontend' },
+      { name: 'Tailwind CSS',  category: 'frontend' },
+      { name: 'Framer Motion', category: 'frontend' },
+      { name: 'GSAP',          category: 'tools'    },
+    ],
+    github: 'https://github.com/WillianCosta12/Portfolio-Site-Ferrari',
+    live: 'https://portfolio-site-ferrari.vercel.app',
+    featured: false,
+    status: 'done',
+    cover: FerrariCover,
   },
   {
     id: 'rival-radar',

@@ -14,17 +14,17 @@ const socialLinks = [
 ]
 
 const techBadges = [
-  { label: 'React', style: { left: '-15%', top: '8%' }, delay: 2.0, duration: 3.2 },
-  { label: 'Spring Boot', style: { right: '-18%', top: '18%' }, delay: 2.2, duration: 3.6 },
-  { label: 'PostgreSQL', style: { left: '-12%', bottom: '15%' }, delay: 2.4, duration: 2.8 },
-  { label: 'N8N', style: { right: '-12%', bottom: '22%' }, delay: 2.6, duration: 3.4 },
+  { label: 'Next.js',   style: { left: '-15%', top: '8%' },      delay: 2.0, duration: 3.2 },
+  { label: 'n8n',       style: { right: '-18%', top: '18%' },    delay: 2.2, duration: 3.6 },
+  { label: 'Supabase',  style: { left: '-12%', bottom: '15%' },  delay: 2.4, duration: 2.8 },
+  { label: 'Make',      style: { right: '-12%', bottom: '22%' }, delay: 2.6, duration: 3.4 },
 ]
 
 const skillData = [
-  { key: '"frontend"', value: '"React, Next.js, TypeScript"' },
-  { key: '"backend"', value: '"Spring Boot, Node.js"' },
-  { key: '"database"', value: '"PostgreSQL"' },
-  { key: '"automation"', value: '"N8N, Make"' },
+  { key: '"frontend"',   value: '"Next.js, React, TypeScript"'    },
+  { key: '"backend"',    value: '"Node.js, Supabase, pgvector"'   },
+  { key: '"automation"', value: '"n8n, Make, APIs REST"'          },
+  { key: '"ai"',         value: '"RAG, LLM APIs, embeddings"'     },
 ]
 
 function TerminalLine({ delay, command }: { delay: number; command: string }) {

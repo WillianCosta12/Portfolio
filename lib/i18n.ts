@@ -14,7 +14,7 @@ const resources = {
         eyebrow: 'Full-stack Developer · Natal, RN',
         greeting: '',
         subtitle:
-          'Do mapeamento de processo ao deploy em produção. Atuo ponta a ponta em automações, integrações e desenvolvimento web para empresas que precisam sair do operacional manual.',
+          'Automação, IA e desenvolvimento web ponta a ponta. Integro ERPs, APIs e LLMs para empresas que precisam sair do operacional manual.',
         cta_projects: 'Ver Projetos',
         cta_contact: 'Fale Comigo',
         cta_cv: 'Download CV',
@@ -81,7 +81,7 @@ const resources = {
         eyebrow: 'Full-stack Developer · Natal, Brazil',
         greeting: '',
         subtitle:
-          'From process mapping to production deploy. I work end-to-end on automation, integrations, and web development for businesses that need to move beyond manual operations.',
+          'Automation, AI and end-to-end web development. I connect ERPs, APIs and LLMs so businesses can stop running on manual work.',
         cta_projects: 'View Projects',
         cta_contact: 'Get in Touch',
         cta_cv: 'Download CV',

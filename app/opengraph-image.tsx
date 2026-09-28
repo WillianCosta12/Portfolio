@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'Willian Costa — Full-stack Developer'
+export const alt = 'Willian Costa — Desenvolvedor Full Stack · Automação e IA'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -74,7 +74,7 @@ export default function OGImage() {
               textTransform: 'uppercase',
             }}
           >
-            Full-stack Developer · Natal, RN
+            Full Stack · Automação e IA · Natal, RN
           </span>
         </div>
 
@@ -102,7 +102,7 @@ export default function OGImage() {
               margin: 0,
             }}
           >
-            Automações, integrações e desenvolvimento web para empresas que precisam sair do operacional manual.
+            Automação com n8n/Make, integrações REST, RAG com pgvector e desenvolvimento web com Next.js.
           </p>
         </div>
 
@@ -117,7 +117,7 @@ export default function OGImage() {
           }}
         >
           <div style={{ display: 'flex', gap: '10px' }}>
-            {['React', 'Spring Boot', 'Node.js', 'n8n', 'TypeScript'].map((tech) => (
+            {['Next.js', 'n8n / Make', 'Supabase', 'RAG', 'TypeScript'].map((tech) => (
               <span
                 key={tech}
                 style={{

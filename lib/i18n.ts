@@ -22,7 +22,7 @@ const resources = {
       about: {
         label: 'Sobre',
         title: 'Processo antes de código.',
-        bio: 'Desenvolvedor full-stack com foco em automação e IA. Fui de estagiário de TI a dev em pouco mais de um ano, atuando em escritório de advocacia e contabilidade — construindo integrações, dashboards e automações com n8n, Make e APIs REST. Atualmente disponível para vaga CLT (full-stack ou automação) e para projetos freelance.',
+        bio: 'Desenvolvedor full-stack com foco em automação e IA. Desenvolvi sistemas de CRM, RH e financeiro em produção e mais de 20 automações que reduziram 80–90% do trabalho manual em escritórios de advocacia e contabilidade. Disponível para vaga CLT (full-stack ou automação) e para projetos freelance.',
         english_level: 'Inglês B1',
         experience: 'Experiência',
         stack: 'Stack',
@@ -89,7 +89,7 @@ const resources = {
       about: {
         label: 'About',
         title: 'Process before code.',
-        bio: 'Full-stack developer focused on automation and AI. Went from IT intern to developer in just over a year, working at a law firm and an accounting firm — building integrations, dashboards and automations with n8n, Make and REST APIs. Currently open to full-time positions (full-stack or automation) and freelance projects.',
+        bio: 'Full-stack developer focused on automation and AI. Built production CRM, HR and finance systems, and 20+ automations that cut manual work by 80–90% in law and accounting firms. Open to full-time positions (full-stack or automation) and freelance projects.',
         english_level: 'English B1',
         experience: 'Experience',
         stack: 'Stack',

@@ -31,19 +31,19 @@ const categoryColors: Record<string, string> = {
 const experiencePt = [
   {
     period: 'abr 2026 – set 2026',
-    role: 'Desenvolvedor',
+    role: 'Desenvolvedor de Software',
     company: 'DM Contabilidade',
     type: 'Tempo integral',
     description:
-      'Automações n8n/Make e sistemas internos para o ecossistema contábil. Integrações entre ERPs contábeis, planilhas e ferramentas fiscais. Sistemas sob medida para reduzir retrabalho manual.',
+      'Desenvolvi os sistemas internos de CRM, RH e financeiro usados por toda a empresa (~30 pessoas), com Next.js, Node.js, Supabase e Python. Automatizei coleta de notas fiscais, guias e certidões via APIs REST, n8n e Make — processos de 2–3 dias passaram a levar ~1 hora. Integrei ERPs, CRMs e planilhas via REST e webhooks.',
   },
   {
-    period: 'set 2025 – mar 2026',
+    period: 'out 2025 – mar 2026',
     role: 'Assistente de TI',
     company: 'Escritório Duarte e Almeida',
     type: 'Tempo integral',
     description:
-      'Dashboards de inteligência de negócio, análise de dados, integrações e automações de apoio às demandas jurídicas do escritório.',
+      'Reduzi 80–90% do trabalho manual com 20+ automações integrando AdvBox, API4Com, Banco Inter, DataJud, PJe e ZapSign. Implantei chatbot jurídico com Gemini e agente de IA de auditoria para 50 colaboradores. Dashboards de BI para carteira de 500 clientes.',
   },
   {
     period: 'jan 2025 – set 2025',
@@ -51,26 +51,26 @@ const experiencePt = [
     company: 'Escritório Duarte e Almeida',
     type: 'Estágio',
     description:
-      'Suporte técnico, criação de relatórios, organização e visualização de dados. Primeiros projetos de automação e consumo de APIs externas.',
+      'Suporte técnico, relatórios, organização e visualização de dados. Primeiros projetos de automação e consumo de APIs externas.',
   },
 ]
 
 const experienceEn = [
   {
     period: 'Apr 2026 – Sep 2026',
-    role: 'Developer',
+    role: 'Software Developer',
     company: 'DM Contabilidade',
     type: 'Full-time',
     description:
-      'n8n/Make automations and internal systems for the accounting ecosystem. Integrations between accounting ERPs, spreadsheets and fiscal tools. Custom systems to reduce manual rework.',
+      'Built internal CRM, HR and finance systems used by the entire company (~30 people), with Next.js, Node.js, Supabase and Python. Automated tax document collection via REST APIs, n8n and Make — workflows that took 2–3 days now take ~1 hour. Integrated ERPs, CRMs and spreadsheets via REST and webhooks.',
   },
   {
-    period: 'Sep 2025 – Mar 2026',
+    period: 'Oct 2025 – Mar 2026',
     role: 'IT Assistant',
     company: 'Escritório Duarte e Almeida',
     type: 'Full-time',
     description:
-      'Business intelligence dashboards, data analysis, integrations and automations supporting the firm\'s legal operations.',
+      'Reduced manual work by 80–90% with 20+ automations connecting AdvBox, API4Com, Banco Inter, DataJud, PJe and ZapSign. Deployed a legal chatbot (Gemini) and an AI audit agent for 50 employees. BI dashboards for a 500-client portfolio.',
   },
   {
     period: 'Jan 2025 – Sep 2025',

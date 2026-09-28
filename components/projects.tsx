@@ -1157,7 +1157,7 @@ export function Projects() {
   const { ref, isInView } = useIntersectionObserver<HTMLElement>({ threshold: 0.05 })
 
   const featuredProject = projects.find((p) => p.featured)
-  const gridProjects    = projects.filter((p) => !p.featured)
+  const gridProjects    = projects.filter((p) => !p.featured && p.status !== 'concept')
 
   return (
     <section id="projects" ref={ref} className="py-24 md:py-32 relative section-projects-bg">

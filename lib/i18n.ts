@@ -34,7 +34,7 @@ const resources = {
       },
       projects: {
         label: 'Projetos',
-        title: 'O que estou construindo',
+        title: 'Projetos selecionados',
         filter_all: 'Todos',
         github: 'Código',
         live: 'Demo',
@@ -101,7 +101,7 @@ const resources = {
       },
       projects: {
         label: 'Projects',
-        title: 'What I am building',
+        title: 'Selected projects',
         filter_all: 'All',
         github: 'Code',
         live: 'Demo',

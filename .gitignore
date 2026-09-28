@@ -35,3 +35,12 @@ Thumbs.db
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# Rascunhos locais
+prompt-*.md
+guia-*.md
+portfolio-video-animation.html
+
+# LibreOffice lock files e temporários do Office
+public/.~lock.*
+public/*.tmp

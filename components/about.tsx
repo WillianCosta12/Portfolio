@@ -5,21 +5,20 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Instagram, Mail, Download, MapPin, Zap, Code2, Briefcase, TrendingUp } from 'lucide-react'
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer'
-import { useCountUp } from '@/hooks/use-count-up'
 
 const skills = [
   { name: 'React',         category: 'frontend' },
-  { name: 'TypeScript',    category: 'frontend' },
   { name: 'Next.js',       category: 'frontend' },
+  { name: 'TypeScript',    category: 'frontend' },
   { name: 'Tailwind CSS',  category: 'frontend' },
   { name: 'Framer Motion', category: 'frontend' },
   { name: 'Node.js',       category: 'backend'  },
-  { name: 'Spring Boot',   category: 'backend'  },
-  { name: 'PostgreSQL',    category: 'backend'  },
+  { name: 'Supabase',      category: 'backend'  },
   { name: 'REST APIs',     category: 'backend'  },
-  { name: 'JavaScript',    category: 'backend'  },
+  { name: 'pgvector / RAG',category: 'backend'  },
   { name: 'n8n',           category: 'tools'    },
   { name: 'Make',          category: 'tools'    },
+  { name: 'LLM APIs',      category: 'tools'    },
   { name: 'Figma',         category: 'tools'    },
 ]
 
@@ -31,20 +30,12 @@ const categoryColors: Record<string, string> = {
 
 const experiencePt = [
   {
-    period: 'mai 2026 – presente',
-    role: 'Desenvolvedor',
-    company: 'Kron Tecnologia',
-    type: 'Autônomo',
-    description:
-      'Automações e integrações sob medida para PMEs. Atuo do mapeamento do processo do cliente até a entrega da solução — n8n, Make, integrações via API e desenvolvimento web quando a solução de prateleira não resolve.',
-  },
-  {
-    period: 'abr 2026 – presente',
+    period: 'abr 2026 – set 2026',
     role: 'Desenvolvedor',
     company: 'DM Contabilidade',
     type: 'Tempo integral',
     description:
-      'Automações e sistemas internos para o ecossistema contábil. Integrações entre ERPs, planilhas e ferramentas fiscais. Redução de retrabalho manual em processos repetitivos do escritório.',
+      'Automações n8n/Make e sistemas internos para o ecossistema contábil. Integrações entre ERPs contábeis, planilhas e ferramentas fiscais. Sistemas sob medida para reduzir retrabalho manual.',
   },
   {
     period: 'set 2025 – mar 2026',
@@ -52,7 +43,7 @@ const experiencePt = [
     company: 'Escritório Duarte e Almeida',
     type: 'Tempo integral',
     description:
-      'Dashboards de inteligência de negócio, análise de dados internos e externos, integrações e automações de apoio às demandas jurídicas. Elaboração de relatórios estratégicos e acompanhamento de métricas.',
+      'Dashboards de inteligência de negócio, análise de dados, integrações e automações de apoio às demandas jurídicas do escritório.',
   },
   {
     period: 'jan 2025 – set 2025',
@@ -66,20 +57,12 @@ const experiencePt = [
 
 const experienceEn = [
   {
-    period: 'May 2026 – present',
-    role: 'Developer',
-    company: 'Kron Tecnologia',
-    type: 'Freelance',
-    description:
-      'Custom automations and integrations for SMBs. I work end-to-end from mapping the client\'s process to delivering the solution — n8n, Make, API integrations and web development when off-the-shelf tools don\'t fit.',
-  },
-  {
-    period: 'Apr 2026 – present',
+    period: 'Apr 2026 – Sep 2026',
     role: 'Developer',
     company: 'DM Contabilidade',
     type: 'Full-time',
     description:
-      'Automations and internal systems for the accounting ecosystem. Integrations between ERPs, spreadsheets and fiscal tools. Reduction of manual rework in repetitive back-office processes.',
+      'n8n/Make automations and internal systems for the accounting ecosystem. Integrations between accounting ERPs, spreadsheets and fiscal tools. Custom systems to reduce manual rework.',
   },
   {
     period: 'Sep 2025 – Mar 2026',
@@ -87,7 +70,7 @@ const experienceEn = [
     company: 'Escritório Duarte e Almeida',
     type: 'Full-time',
     description:
-      'Business intelligence dashboards, internal and external data analysis, integrations and automations supporting legal demands. Strategic report writing and metrics tracking.',
+      'Business intelligence dashboards, data analysis, integrations and automations supporting the firm\'s legal operations.',
   },
   {
     period: 'Jan 2025 – Sep 2025',
@@ -139,8 +122,6 @@ export function About() {
   const { t, i18n } = useTranslation()
   const { ref, isInView } = useIntersectionObserver<HTMLElement>({ threshold: 0.1 })
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
-  const yearsCount = useCountUp(1, 1200, isInView)
-  const projectsCount = useCountUp(12, 1500, isInView)
   const experience = i18n.language === 'en' ? experienceEn : experiencePt
 
   const handleBentoMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -271,19 +252,11 @@ export function About() {
           {/* Card 4 — Stats */}
           <BentoCard delay={0.2} isInView={isInView} onMouseMove={handleBentoMouseMove}>
             <TrendingUp className="w-5 h-5 text-[var(--accent)] mb-4" />
-            <div className="grid grid-cols-2 gap-4">
-              <div className="text-center">
-                <p className="font-display text-4xl font-bold text-[var(--accent)] text-glow">
-                  {yearsCount}+
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">{t('about.stats_years')}</p>
-              </div>
-              <div className="text-center">
-                <p className="font-display text-4xl font-bold text-[var(--accent)] text-glow">
-                  {projectsCount}+
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">{t('about.stats_projects')}</p>
-              </div>
+            <div className="flex flex-col items-center justify-center h-full gap-1 py-2">
+              <p className="font-display text-4xl font-bold text-[var(--accent)] text-glow">
+                30+
+              </p>
+              <p className="text-xs text-muted-foreground text-center">{t('about.stats_automations')}</p>
             </div>
           </BentoCard>
 

@@ -49,13 +49,20 @@ const nextConfig = {
   // Cada idioma é uma página: o português mora em app/[lang] como "pt", mas o endereço público é "/".
   async rewrites() {
     return {
-      beforeFiles: [{ source: '/', destination: '/pt' }],
+      beforeFiles: [
+        { source: '/', destination: '/pt' },
+        // os estudos de caso em português: /projetos/<slug> mora em app/[lang] como /pt/projetos/<slug>
+        { source: '/projetos/:slug', destination: '/pt/projetos/:slug' },
+      ],
     }
   },
   // /pt nunca aparece como endereço da página: quem chegar por ele vai para "/" (um endereço só por página).
   // Só o exato: os arquivos da página (como /pt/opengraph-image) continuam servidos onde estão.
   async redirects() {
-    return [{ source: '/pt', destination: '/', permanent: true }]
+    return [
+      { source: '/pt', destination: '/', permanent: true },
+      { source: '/pt/projetos/:slug', destination: '/projetos/:slug', permanent: true },
+    ]
   },
 }
 

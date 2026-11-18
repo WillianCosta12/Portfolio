@@ -86,6 +86,120 @@ const pt = {
     rights: 'Willian Costa · Natal, RN',
     logos: 'Nomes e logos de ferramentas pertencem aos seus donos.',
   },
+  // Estudos de caso (18/11): dois trabalhos feitos dentro de empresas, com os fatos que ele confirmou.
+  // Empresas anônimas. Cada caso tem uma página (/projetos/<slug>, /en/projects/<slug>) e um cartaz em "03".
+  cases: {
+    label: 'Estudo de caso',
+    plural: 'Estudos de caso',
+    read: 'Ler o caso',
+    see: 'Ver o caso',
+    back: 'Voltar aos projetos',
+    next: 'Próximo caso',
+    flow: 'O fluxo',
+    sections: {
+      context: 'Contexto',
+      before: 'Antes',
+      built: 'O que construí',
+      hard: 'O mais difícil',
+      result: 'Resultado',
+      after: 'Depois',
+      tools: 'Ferramentas',
+      period: 'Período',
+      role: 'Papel',
+    },
+    meta_suffix: 'estudo de caso · Willian Costa',
+    items: [
+      {
+        id: 'auditoria',
+        file: 'auditoria.flow',
+        short: 'Auditoria de conversas com IA',
+        title: 'Auditoria de conversas comerciais com IA',
+        kind: 'IA aplicada · automação',
+        description:
+          'Um agente de IA que audita as conversas de WhatsApp do comercial, do lead até a venda ou a perda, com nota de 1 a 5 por pessoa. Mais de 200 conversas por mês.',
+        summary:
+          'Um agente de IA que lê as conversas de WhatsApp do comercial, do primeiro contato até a venda ou a perda, e avalia o atendimento de cada pessoa. Antes, essas conversas não eram auditadas.',
+        stats: [
+          { value: 'Mais de 200', label: 'conversas por mês' },
+          { value: 'Nenhuma → todas', label: 'as conversas do comercial auditadas' },
+          { value: '3 automações', label: 'usam a auditoria' },
+        ],
+        diagram: [
+          'WhatsApp do comercial',
+          'Mensagens do período, com mídia',
+          'Áudio, imagem e documento viram texto',
+          'Conversa montada em ordem',
+          'Gemini audita: nota de 1 a 5',
+          'Auditoria salva no CRM',
+        ],
+        context:
+          'Escritório de serviços profissionais. O comercial atendia os leads pelo WhatsApp, num sistema de chat ligado à API oficial da Meta. Cada lead passava pelo SDR, pelo closer e por um especialista até a venda ou a perda.',
+        before:
+          'Nenhuma conversa era auditada. Não havia como saber como cada pessoa abordava o lead, que estratégia usava ou onde a venda se perdia.',
+        built_intro: '',
+        steps: [
+          'A automação busca na API do sistema de chat todas as mensagens de um período, com data, conteúdo e mídia.',
+          'Áudios, imagens e documentos são transcritos ou lidos por IA.',
+          'Tudo é ordenado pelo horário de cada mensagem, e a conversa é montada inteira, em sequência.',
+          'A conversa vai para o Gemini com um prompt de auditoria: como o SDR, o closer e o especialista abordaram o lead, as estratégias e o tom de cada um, e uma nota de 1 a 5 com o que cada pessoa pode melhorar.',
+          'O resultado é salvo no CRM da empresa, junto do lead.',
+        ],
+        built_note:
+          'Roda todo dia, na auditoria diária de cada equipe do comercial, e no momento em que o lead vira venda ou perda.',
+        hard: 'Encontrar o endpoint certo. A API do chat tinha muitos, e só um devolvia todas as mensagens de um período com data, conteúdo e mídia. Foi um processo longo de pesquisa e estudo. Depois dele, o resto foi direto.',
+        result:
+          'O comercial passou a ter todas as conversas auditadas, com nota e pontos de melhoria para cada pessoa. O ganho não foi de tempo, foi de qualidade no atendimento.',
+        after:
+          'A auditoria virou peça de outras automações: a auditoria diária de cada equipe e um dossiê que reúne tudo o que foi conversado até a venda e encaminha para o pós-venda. Quando saí da empresa, ela continuou funcionando.',
+        tools: 'Make, depois migrado por mim para n8n · Gemini · API do sistema de chat (WhatsApp, API oficial da Meta) · CRM da empresa',
+        period: 'out 2025 – mar 2026',
+        role: 'Construí sozinho, do início ao fim. Meu superior validava.',
+      },
+      {
+        id: 'dds',
+        file: 'declaracoes.flow',
+        short: 'Declarações de ISS automatizadas',
+        title: 'Declarações mensais de ISS de 450 empresas, automatizadas',
+        kind: 'Automação · Python',
+        description:
+          'Automação em Python que emite todo mês a DDS e a guia DAM de cerca de 450 empresas no RN. O que levava quase uma semana passou a levar cerca de 3 horas.',
+        summary:
+          'Uma automação em Python que, todo mês, confere as notas fiscais de cerca de 450 empresas, emite a declaração de serviços de cada uma e gera a guia de pagamento quando é preciso. O que levava quase uma semana de um setor inteiro passou a levar uma manhã.',
+        stats: [
+          { value: 'Cerca de 450', label: 'empresas por mês' },
+          { value: 'Quase 1 semana → 3 h', label: 'para fazer todas' },
+          { value: '2 portais', label: 'Portal Directa (Natal) e Tinus' },
+        ],
+        diagram: [
+          'Cerca de 450 empresas, todo mês',
+          'Portal Directa ou Tinus',
+          'Teve notas fiscais no mês?',
+          'O ISS foi retido?',
+          'Emite a DDS',
+          'Gera a guia DAM, se houver imposto',
+        ],
+        context:
+          'Empresa de serviços profissionais responsável pelas obrigações fiscais de cerca de 450 empresas no Rio Grande do Norte. Todo mês, cada uma precisa entregar a declaração de serviços do ISS (em Natal, a DDS, Declaração Digital de Serviços) e, quando há imposto a pagar, emitir a guia DAM.',
+        before:
+          'Um setor inteiro fazia isso à mão, com as empresas divididas entre as pessoas, e depois ainda conferia. Levava quase uma semana, todo mês.',
+        built_intro: 'Uma automação em Python que roda em segundo plano e, para cada empresa:',
+        steps: [
+          'Entra no portal do município: o Portal Directa, em Natal, ou o portal da Tinus, nos outros municípios.',
+          'Confere se a empresa emitiu notas fiscais no mês.',
+          'Verifica se o ISS das notas foi retido ou não.',
+          'Emite a declaração e, se houver imposto a pagar, gera a guia DAM.',
+        ],
+        built_note:
+          'Cada combinação dessas situações tem um caminho próprio, e a automação trata todas. Construí com o Claude Code, que também atua como agente auxiliar no processo: trata os dados brutos de entrada e saída e faz os ajustes necessários.',
+        hard: 'Mapear os casos. Pequenos detalhes mudavam o caminho (nota retida ou não, empresa sem notas no mês, guia ou não), e cada um precisava ser tratado sem erro.',
+        result: 'De quase uma semana para cerca de 3 horas, todo mês, para cerca de 450 empresas. O setor deixou de fazer esse trabalho repetitivo à mão.',
+        after: '',
+        tools: 'Python · Claude Code · Portal Directa (Natal) · Tinus',
+        period: 'abr – set 2026',
+        role: 'Construí sozinho, do início ao fim. Meu superior validava.',
+      },
+    ],
+  },
   // Site final (17/11): modelo 5 como base + detalhes pescados (PREFERENCIAS.md). Texto factual, na voz dele.
   site: {
     nav: { services: 'O que faço', work: 'Projetos', about: 'Sobre', contact: 'Contato' },
@@ -146,8 +260,8 @@ const pt = {
     fields_shape: '{{count}} × { campo, valor, ferramentas }',
     tools_label: 'Ferramentas',
     used_in: 'Usado em',
-    work_h: 'Projetos no ar',
-    work_intro: 'Projetos meus, publicados, com o código aberto no GitHub.',
+    work_h: 'Projetos',
+    work_intro: 'Dois trabalhos feitos dentro de empresas, em produção, e três projetos meus, publicados.',
     project_of: 'Projeto {{n}} de {{total}}',
     process_h: 'Como eu trabalho',
     process_intro: 'Em três etapas, cada uma validada antes da próxima.',
@@ -184,14 +298,14 @@ const pt = {
     toggle_off: 'Manual',
     toggle_on: 'Automatizado',
     kpis: [
-      { before: 'Uma semana', after: '2–3 horas', label: 'para extrair documentos numa empresa de serviços profissionais' },
+      { before: 'Quase 1 semana', after: '3 horas', label: 'para emitir as declarações de ISS de cerca de 450 empresas' },
       { value: 'Mais de 30', label: 'automações em produção desde 2025' },
       { value: '80–90%', label: 'menos trabalho manual nas rotinas automatizadas' },
       { value: '50 pessoas', label: 'usam um chatbot e um agente de auditoria com IA' },
     ],
     jobs: [
-      { kind: 'Automação', title: 'Extração automática de documentos', text: 'Para uma empresa de serviços profissionais. O que levava uma semana passou a levar de 2 a 3 horas.' },
-      { kind: 'IA aplicada', title: 'Auditoria de conversas com IA', text: 'Um agente que audita conversas. Foi o trabalho que mais exigiu construção, e depois virou peça de várias outras automações.' },
+      { kind: 'Automação', title: 'Declarações mensais de ISS', text: 'Para cerca de 450 empresas, todo mês. O que levava quase uma semana de um setor passou a levar cerca de 3 horas.' },
+      { kind: 'IA aplicada', title: 'Auditoria de conversas com IA', text: 'Audita as conversas do comercial, do lead até a venda ou a perda, com nota de 1 a 5 por pessoa. Virou peça de outras automações.' },
       { kind: 'Automação', title: 'Automações de rotina', text: 'Mais de 20 automações entre sistemas, bancos e portais, com 80 a 90% menos trabalho manual. Um chatbot e o agente de auditoria atendem 50 pessoas.' },
       { kind: 'Sistema web', title: 'Sistemas internos de gestão', text: 'CRM, RH e financeiro usados por uma empresa de cerca de 30 pessoas, com Next.js, Node.js, Supabase e Python.' },
     ],
@@ -304,6 +418,117 @@ const en: Copy = {
     rights: 'Willian Costa · Natal, Brazil',
     logos: 'Tool names and logos belong to their owners.',
   },
+  cases: {
+    label: 'Case study',
+    plural: 'Case studies',
+    read: 'Read the case',
+    see: 'See the case',
+    back: 'Back to projects',
+    next: 'Next case',
+    flow: 'The flow',
+    sections: {
+      context: 'Context',
+      before: 'Before',
+      built: 'What I built',
+      hard: 'The hardest part',
+      result: 'Result',
+      after: 'After',
+      tools: 'Tools',
+      period: 'Period',
+      role: 'Role',
+    },
+    meta_suffix: 'case study · Willian Costa',
+    items: [
+      {
+        id: 'auditoria',
+        file: 'audit.flow',
+        short: 'AI conversation audit',
+        title: 'AI audit of sales conversations',
+        kind: 'Applied AI · automation',
+        description:
+          'An AI agent that audits the WhatsApp conversations of a sales team, from lead to sale or loss, with a score from 1 to 5 per person. More than 200 conversations a month.',
+        summary:
+          'An AI agent that reads the WhatsApp conversations of the sales team, from the first contact to the sale or the loss, and reviews how each person handled the lead. Before, nobody reviewed these conversations.',
+        stats: [
+          { value: 'More than 200', label: 'conversations a month' },
+          { value: 'None → all', label: 'sales conversations audited' },
+          { value: '3 automations', label: 'use the audit' },
+        ],
+        diagram: [
+          'Sales team WhatsApp',
+          'Messages of the period, with media',
+          'Audio, images and documents become text',
+          'Conversation put in order',
+          'Gemini audits: score from 1 to 5',
+          'Audit saved in the CRM',
+        ],
+        context:
+          'A professional services office. The sales team talked to leads on WhatsApp, through a chat system connected to the official Meta API. Each lead went through an SDR, a closer and a specialist until the sale or the loss.',
+        before:
+          'No conversation was audited. There was no way to know how each person approached a lead, which strategy they used or where a sale was lost.',
+        built_intro: '',
+        steps: [
+          'The automation gets all the messages of a period from the chat system API, with date, content and media.',
+          'Audio, images and documents are transcribed or read by AI.',
+          'Everything is sorted by the time of each message, and the whole conversation is put together in order.',
+          'The conversation goes to Gemini with an audit prompt: how the SDR, the closer and the specialist approached the lead, the strategy and tone of each one, and a score from 1 to 5 with what each person can improve.',
+          'The result is saved in the company CRM, with the lead.',
+        ],
+        built_note: 'It runs every day, in the daily audit of each sales team, and at the moment a lead becomes a sale or a loss.',
+        hard: 'Finding the right endpoint. The chat API had many, and only one returned all the messages of a period with date, content and media. It took a long time of research and study. After that, the rest was straightforward.',
+        result:
+          'The sales team started to have every conversation audited, with a score and points to improve for each person. The gain was not time: it was the quality of the service.',
+        after:
+          'The audit became part of other automations: the daily audit of each team and a file with everything discussed until the sale, sent to the after-sales team. When I left the company, it kept running.',
+        tools: 'Make, later moved by me to n8n · Gemini · chat system API (WhatsApp, official Meta API) · company CRM',
+        period: 'Oct 2025 – Mar 2026',
+        role: 'I built it alone, from start to finish. My manager approved it.',
+      },
+      {
+        id: 'dds',
+        file: 'declarations.flow',
+        short: 'Automated ISS declarations',
+        title: 'Monthly ISS declarations for 450 companies, automated',
+        kind: 'Automation · Python',
+        description:
+          'A Python automation that files the monthly service tax (ISS) declaration and payment slip of about 450 companies in Brazil. Almost a week of work became about 3 hours.',
+        summary:
+          'A Python automation that, every month, checks the invoices of about 450 companies, files the service declaration of each one and creates the payment slip when needed. What took almost a week for a whole team now takes one morning.',
+        stats: [
+          { value: 'About 450', label: 'companies a month' },
+          { value: 'Almost 1 week → 3 h', label: 'to do them all' },
+          { value: '2 portals', label: 'Portal Directa (Natal) and Tinus' },
+        ],
+        diagram: [
+          'About 450 companies, every month',
+          'Portal Directa or Tinus',
+          'Any invoices this month?',
+          'Was the ISS withheld?',
+          'Files the DDS',
+          'Creates the DAM slip, if tax is due',
+        ],
+        context:
+          'A professional services company in charge of the tax obligations of about 450 companies in Rio Grande do Norte, Brazil. Every month, each one must file the municipal service tax (ISS) declaration (in Natal, the DDS) and, when tax is due, create the payment slip (DAM).',
+        before:
+          'A whole team did this by hand, with the companies split between people, and then checked it all again. It took almost a week, every month.',
+        built_intro: 'A Python automation that runs in the background and, for each company:',
+        steps: [
+          'Logs in to the city portal: Portal Directa in Natal, or the Tinus portal in other cities.',
+          'Checks if the company issued invoices that month.',
+          'Checks if the ISS on the invoices was withheld or not.',
+          'Files the declaration and, if tax is due, creates the DAM slip.',
+        ],
+        built_note:
+          'Each combination of these situations has its own path, and the automation handles all of them. I built it with Claude Code, which also works as a helper agent in the process: it handles the raw input and output data and makes the needed adjustments.',
+        hard: 'Mapping the cases. Small details changed the path (withheld or not, no invoices that month, slip or no slip), and each one had to be handled without errors.',
+        result: 'From almost a week to about 3 hours, every month, for about 450 companies. The team stopped doing this repetitive work by hand.',
+        after: '',
+        tools: 'Python · Claude Code · Portal Directa (Natal) · Tinus',
+        period: 'Apr – Sep 2026',
+        role: 'I built it alone, from start to finish. My manager approved it.',
+      },
+    ],
+  },
   site: {
     nav: { services: 'What I do', work: 'Projects', about: 'About', contact: 'Contact' },
     nav_label: 'Main menu',
@@ -363,8 +588,8 @@ const en: Copy = {
     fields_shape: '{{count}} × { field, value, tools }',
     tools_label: 'Tools',
     used_in: 'Used in',
-    work_h: 'Live projects',
-    work_intro: 'My own projects, published, with the code open on GitHub.',
+    work_h: 'Projects',
+    work_intro: 'Two pieces of work built inside companies, in production, and three of my own projects, published.',
     project_of: 'Project {{n}} of {{total}}',
     process_h: 'How I work',
     process_intro: 'In three steps, each one checked before the next.',
@@ -401,14 +626,14 @@ const en: Copy = {
     toggle_off: 'Manual',
     toggle_on: 'Automated',
     kpis: [
-      { before: 'One week', after: '2–3 hours', label: 'to extract documents at a professional services company' },
+      { before: 'Almost a week', after: '3 hours', label: 'to file the ISS declarations of about 450 companies' },
       { value: 'More than 30', label: 'automations in production since 2025' },
       { value: '80–90%', label: 'less manual work in the automated routines' },
       { value: '50 people', label: 'use an AI chatbot and an AI audit agent' },
     ],
     jobs: [
-      { kind: 'Automation', title: 'Automatic document extraction', text: 'For a professional services company. What took a week now takes 2 to 3 hours.' },
-      { kind: 'Applied AI', title: 'AI conversation audit', text: 'An agent that audits conversations. It was the work that took the most building, and it then became part of several other automations.' },
+      { kind: 'Automation', title: 'Monthly ISS declarations', text: 'For about 450 companies, every month. What took a team almost a week now takes about 3 hours.' },
+      { kind: 'Applied AI', title: 'AI conversation audit', text: 'Audits the sales conversations, from lead to sale or loss, with a score from 1 to 5 per person. It became part of other automations.' },
       { kind: 'Automation', title: 'Routine automation', text: 'More than 20 automations across systems, banks and portals, with 80 to 90% less manual work. A chatbot and the audit agent serve 50 people.' },
       { kind: 'Web system', title: 'Internal management systems', text: 'CRM, HR and finance used by a company of about 30 people, built with Next.js, Node.js, Supabase and Python.' },
     ],

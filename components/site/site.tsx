@@ -5,11 +5,14 @@ import { useTranslation } from 'react-i18next'
 import { MotionConfig } from 'framer-motion'
 import type { Lang } from '@/lib/i18n'
 import { Logo } from '@/components/brand/logo'
-import { CONTACT, CONTACT_LINKS } from '@/lib/content'
+import { CONTACT, CONTACT_LINKS, casePath, type CaseId } from '@/lib/content'
 import { track } from './track'
 import { LangProvider } from './lang-provider'
 import { Stage } from './stage'
 import { Flow } from './chapters'
+import { CaseView } from './case-view'
+
+const homePath = (lang: Lang) => (lang === 'en' ? '/en' : '/')
 import s from './site.module.css'
 
 /**
@@ -99,16 +102,42 @@ function Follower({ on }: { on: boolean }) {
 export function Site({ lang }: { lang: Lang }) {
   return (
     <LangProvider lang={lang}>
-      <Page lang={lang} />
+      <Shell lang={lang} home otherLangHref={lang === 'en' ? '/' : '/en'}>
+        {/* a wrapper, so the old global main > section sizing does not reach these chapters */}
+        <div>
+          <Stage />
+          {/* a hydration boundary: React wakes the opening first and the chapters below it in a second
+              step, so the main thread gets a break between the two (the HTML is the same either way) */}
+          <Suspense>
+            <Flow />
+          </Suspense>
+        </div>
+      </Shell>
     </LangProvider>
   )
 }
 
-function Page({ lang }: { lang: Lang }) {
+/** A case study page (/projetos/<slug>, /en/projects/<slug>): the same menu and footer around the case. */
+export function CaseSite({ lang, id }: { lang: Lang; id: CaseId }) {
+  return (
+    <LangProvider lang={lang}>
+      <Shell lang={lang} home={false} otherLangHref={casePath(lang === 'en' ? 'pt' : 'en', id)}>
+        <CaseView lang={lang} id={id} />
+      </Shell>
+    </LangProvider>
+  )
+}
+
+/**
+ * The frame every page shares: the pill menu, the footer and the block that follows the pointer. On the home
+ * page the menu jumps to its chapters; on a case page it goes back to them on the home page of the same language.
+ */
+function Shell({ lang, home, otherLangHref, children }: { lang: Lang; home: boolean; otherLangHref: string; children: React.ReactNode }) {
   const { t } = useTranslation()
   const isEn = lang === 'en'
   const follow = useSyncExternalStore(followStore.subscribe, followStore.get, followOnServer)
   const toggleFollow = (on: boolean) => followStore.set(on)
+  const at = (hash: string) => (home ? hash : `${homePath(lang)}${hash}`)
 
   return (
     <MotionConfig reducedMotion="user">
@@ -119,46 +148,36 @@ function Page({ lang }: { lang: Lang }) {
         <Follower on={follow} />
 
         <header className={s.pill}>
-          <a href="#inicio" className={s.pillLogo} aria-label={t('nav.home')}>
+          <a href={home ? '#inicio' : homePath(lang)} className={s.pillLogo} aria-label={t('nav.home')}>
             <Logo tone="light" />
           </a>
           <nav className={s.pillLinks} aria-label={t('site.nav_label')}>
-            <a href="#o-que-faco" onClick={() => track('nav_click', { to: 'services' })}>
+            <a href={at('#o-que-faco')} onClick={() => track('nav_click', { to: 'services' })}>
               {t('site.nav.services')}
             </a>
-            <a href="#projetos" onClick={() => track('nav_click', { to: 'projects' })}>
+            <a href={at('#projetos')} onClick={() => track('nav_click', { to: 'projects' })}>
               {t('site.nav.work')}
             </a>
-            <a href="#sobre" onClick={() => track('nav_click', { to: 'about' })}>
+            <a href={at('#sobre')} onClick={() => track('nav_click', { to: 'about' })}>
               {t('site.nav.about')}
             </a>
           </nav>
           {/* the other language is another page: a plain link that crawlers follow too */}
           <a
             className={s.lang}
-            href={isEn ? '/' : '/en'}
+            href={otherLangHref}
             hrefLang={isEn ? 'pt-BR' : 'en'}
             onClick={() => track('lang_switch', { to: isEn ? 'pt' : 'en' })}
             aria-label={t('nav.lang_switch')}
           >
             {isEn ? 'PT' : 'EN'}
           </a>
-          <a href="#contato" className={s.pillCta} onClick={() => track('nav_click', { to: 'contact' })}>
+          <a href={at('#contato')} className={s.pillCta} onClick={() => track('nav_click', { to: 'contact' })}>
             {t('site.nav.contact')}
           </a>
         </header>
 
-        <main id="conteudo">
-          {/* a wrapper, so the old global main > section sizing does not reach these chapters */}
-          <div>
-            <Stage />
-            {/* a hydration boundary: React wakes the opening first and the chapters below it in a second
-                step, so the main thread gets a break between the two (the HTML is the same either way) */}
-            <Suspense>
-              <Flow />
-            </Suspense>
-          </div>
-        </main>
+        <main id="conteudo">{children}</main>
 
         <footer className={s.foot}>
           <p className={s.footBig}>{t('site.thanks')}</p>

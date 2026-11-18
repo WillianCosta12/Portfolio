@@ -74,3 +74,23 @@ export const PORTRAIT = {
   width: 776,
   height: 970,
 } as const
+
+// Estudos de caso: mesma ordem de cases.items no i18n. Cada um tem um endereço por idioma, a área de
+// "O que faço" que ele comprova (índice em site.services) e o trabalho de "Em produção" (índice em site.jobs).
+export const CASES = [
+  { id: 'auditoria', slug: { pt: 'auditoria-de-conversas-com-ia', en: 'ai-conversation-audit' }, service: 2, job: 1, stack: ['make', 'n8n', 'gemini'] },
+  { id: 'dds', slug: { pt: 'automacao-dds-iss', en: 'iss-declaration-automation' }, service: 1, job: 0, stack: ['python'] },
+] as const
+
+export type CaseId = (typeof CASES)[number]['id']
+/** The folder each language keeps its cases in: /projetos/<slug> and /en/projects/<slug>. */
+export const CASE_SECTION = { pt: 'projetos', en: 'projects' } as const
+export const casePath = (lang: 'pt' | 'en', id: CaseId) => {
+  const c = CASES.find((x) => x.id === id)!
+  return lang === 'en' ? `/en/${CASE_SECTION.en}/${c.slug.en}` : `/${CASE_SECTION.pt}/${c.slug.pt}`
+}
+/** The case behind a route (app/[lang]/[section]/[slug]); undefined when the address is not a case. */
+export const caseAt = (lang: 'pt' | 'en', section: string, slug: string) =>
+  section === CASE_SECTION[lang] ? CASES.find((c) => c.slug[lang] === slug)?.id : undefined
+/** Every case route, for the static build of one language. */
+export const caseParams = (lang: 'pt' | 'en') => CASES.map((c) => ({ section: CASE_SECTION[lang], slug: c.slug[lang] }))

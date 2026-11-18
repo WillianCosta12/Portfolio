@@ -4,7 +4,7 @@
 
 import type { Metadata } from 'next'
 import { COPY, LANGS, type Lang } from '@/lib/i18n'
-import { CONTACT, LIVE_PROJECTS, PORTRAIT, TOOLS } from '@/lib/content'
+import { CASES, CONTACT, LIVE_PROJECTS, PORTRAIT, TOOLS, casePath, type CaseId } from '@/lib/content'
 
 /**
  * The public address. Set SITE_URL=https://wcosta.dev in Vercel when the domain points here;
@@ -13,7 +13,7 @@ import { CONTACT, LIVE_PROJECTS, PORTRAIT, TOOLS } from '@/lib/content'
 export const SITE_URL = (process.env.SITE_URL || 'https://williancosta.vercel.app').replace(/\/+$/, '')
 
 /** When the page's text last changed (sitemap and dateModified). Update it with the copy. */
-export const CONTENT_UPDATED = '2026-11-17'
+export const CONTENT_UPDATED = '2026-11-18'
 
 export const NAME = 'Willian Costa'
 export const BRAND = 'wcosta.dev'
@@ -141,8 +141,17 @@ export function homeJsonLd(lang: Lang) {
         '@type': 'ItemList',
         '@id': `${url}#projects`,
         name: c.site.work_h,
-        itemListElement: LIVE_PROJECTS.map((p, i) => {
-          const item = c.work.items[i]
+        itemListElement: [
+          // the two case studies first (as on the page), each pointing to its own article
+          ...CASES.map((cs, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            url: abs(casePath(lang, cs.id)),
+            name: c.cases.items[i].title,
+          })),
+          ...LIVE_PROJECTS.map((p, j) => {
+          const i = CASES.length + j
+          const item = c.work.items[j]
           return {
             '@type': 'ListItem',
             position: i + 1,
@@ -159,6 +168,91 @@ export function homeJsonLd(lang: Lang) {
             },
           }
         }),
+        ],
+      },
+    ],
+  }
+}
+
+/** A case study's paths in both languages (for canonical and hreflang). */
+const casePaths = (id: CaseId) => ({ pt: casePath('pt', id), en: casePath('en', id) })
+
+/** Title, description, canonical, alternates and social cards of a case study page. */
+export function caseMetadata(lang: Lang, id: CaseId): Metadata {
+  const i = CASES.findIndex((c) => c.id === id)
+  const cs = COPY[lang].cases
+  const item = cs.items[i]
+  const url = abs(casePath(lang, id))
+  const title = `${item.title} — ${cs.meta_suffix}`
+  return {
+    metadataBase: new URL(SITE_URL),
+    title,
+    description: item.description,
+    applicationName: BRAND,
+    authors: [{ name: NAME, url: abs(homePath(lang)) }],
+    creator: NAME,
+    alternates: { canonical: url, languages: languageAlternates(casePaths(id)) },
+    openGraph: {
+      type: 'article',
+      locale: OG_LOCALE[lang],
+      alternateLocale: LANGS.filter((l) => l !== lang).map((l) => OG_LOCALE[l]),
+      url,
+      siteName: BRAND,
+      title,
+      description: item.description,
+      authors: [abs(homePath(lang))],
+    },
+    twitter: { card: 'summary_large_image', title, description: item.description },
+    robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
+  }
+}
+
+/**
+ * A case study as an Article written by the same Person (@id), inside the same WebSite, with a breadcrumb
+ * (home › projects › case). Search engines and AI models tie the work to him through the shared @id.
+ */
+export function caseJsonLd(lang: Lang, id: CaseId) {
+  const i = CASES.findIndex((c) => c.id === id)
+  const c = COPY[lang]
+  const item = c.cases.items[i]
+  const url = abs(casePath(lang, id))
+  const home = abs(homePath(lang))
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Article',
+        '@id': `${url}#article`,
+        headline: item.title,
+        description: item.description,
+        url,
+        inLanguage: LANG_TAG[lang],
+        author: { '@id': PERSON_ID },
+        publisher: { '@id': PERSON_ID },
+        isPartOf: { '@id': WEBSITE_ID },
+        mainEntityOfPage: url,
+        datePublished: '2026-11-18',
+        dateModified: CONTENT_UPDATED,
+        image: `${url}/opengraph-image`,
+        articleSection: c.cases.label,
+        keywords: [...CASES[i].stack.map((tool) => TOOLS[tool]?.name).filter(Boolean), ...item.diagram.slice(0, 2)].join(', '),
+        about: item.kind,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: NAME, item: home },
+          { '@type': 'ListItem', position: 2, name: c.site.work_h, item: `${home}#projetos` },
+          { '@type': 'ListItem', position: 3, name: item.short, item: url },
+        ],
+      },
+      {
+        '@type': 'Person',
+        '@id': PERSON_ID,
+        name: NAME,
+        url: abs('/'),
+        jobTitle: c.meta.job_title,
+        sameAs: SAME_AS,
       },
     ],
   }

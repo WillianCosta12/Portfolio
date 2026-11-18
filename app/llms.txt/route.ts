@@ -1,5 +1,5 @@
 import { COPY } from '@/lib/i18n'
-import { CONTACT, LIVE_PROJECTS, SERVICE_TOOLS, TOOLS } from '@/lib/content'
+import { CASES, CONTACT, LIVE_PROJECTS, SERVICE_TOOLS, TOOLS, casePath } from '@/lib/content'
 import { BRAND, NAME, abs, homePath } from '@/lib/seo'
 
 // /llms.txt: the site in plain Markdown for AI models (llmstxt.org proposal). It is built from the same
@@ -33,6 +33,29 @@ function build() {
     '',
     ...s.services.map((sv, i) => `- **${sv.title}**: ${sv.text} (${s.tools_label}: ${tools(SERVICE_TOOLS[i] ?? [])})`),
     '',
+    `## ${pt.cases.plural}`,
+    '',
+    ...CASES.flatMap((cs, i) => {
+      const c = pt.cases.items[i]
+      const sec = pt.cases.sections
+      return [
+        `### [${c.title}](${abs(casePath('pt', cs.id))})`,
+        '',
+        c.summary,
+        '',
+        ...c.stats.map((st) => `- ${st.value}: ${st.label}`),
+        `- ${sec.context}: ${c.context}`,
+        `- ${sec.before}: ${c.before}`,
+        `- ${sec.built}: ${c.built_intro ? `${c.built_intro} ` : ''}${c.steps.map((step, k) => `(${k + 1}) ${step}`).join(' ')} ${c.built_note}`,
+        `- ${sec.hard}: ${c.hard}`,
+        `- ${sec.result}: ${c.result}`,
+        ...(c.after ? [`- ${sec.after}: ${c.after}`] : []),
+        `- ${sec.tools}: ${c.tools}`,
+        `- ${sec.period}: ${c.period}. ${sec.role}: ${c.role}`,
+        `- English: ${abs(casePath('en', cs.id))}`,
+        '',
+      ]
+    }),
     `## ${s.work_h}`,
     '',
     s.work_intro,

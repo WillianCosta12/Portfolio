@@ -55,21 +55,25 @@ A página conta uma história com o scroll: papéis espalhados (o trabalho manua
 app/
   [lang]/layout.tsx       raiz de cada idioma: <html lang>, metadados, JSON-LD, linha do head que liga html.m-enter, Analytics
   [lang]/page.tsx         → <Site lang />
-  [lang]/opengraph-image.tsx  imagem de compartilhamento no idioma (fontes em [lang]/_fonts)
+  [lang]/opengraph-image.tsx  imagem de compartilhamento no idioma (desenho em lib/og.tsx, fontes em [lang]/_fonts)
+  [lang]/[section]/[slug]/    estudos de caso: /projetos/<slug> (PT) e /en/projects/<slug> (EN), com imagem própria
   global-not-found.tsx    404 bilíngue na marca (experimental.globalNotFound)
   fonts.ts, globals.css, icon.svg, apple-icon.tsx, robots.ts, sitemap.ts, manifest.ts, llms.txt/route.ts
 components/site/
   site.tsx           menu em pílula (link PT/EN), main (Stage + Flow), rodapé com atalhos, bloco que segue o cursor
   lang-provider.tsx  i18next por idioma + usePageLang
   stage.tsx          abertura + 01: papéis, apresentação, documento lido e riscado, linha teal
-  chapters.tsx       conector, 02 tabela presa, 03 cartazes, 04 checagens + demonstração, 05 painel + chamada, 06 Sobre, 07 contato em terminal
+  chapters.tsx       conector, 02 tabela presa (+ links para os casos) e a demonstração, 03 cartazes (2 casos + 3 projetos), 04 checagens, 05 painel + chamada, 06 Sobre, 07 contato
+  case-view.tsx      página de um estudo de caso (abertura com números, diagrama e fatos, a história)
+  flow-diagram.tsx   o fluxo de um caso como diagrama (no lugar de prints de cliente)
   demo.tsx, mosaic.tsx, hooks.ts (formulário EmailJS), track.ts, site.module.css
 components/brand/logo.tsx   BrandSymbol + Logo (tone dark|light)
 lib/
   i18n.ts            TODO o texto visível, PT e EN (só dados)
   content.ts         links, ferramentas, projetos, retrato — sem texto visível
-  seo.ts             SITE_URL, CONTENT_UPDATED, metadados e JSON-LD
-next.config.mjs      rewrite / → /pt, redirect /pt → /, globalNotFound
+  seo.ts             SITE_URL, CONTENT_UPDATED, metadados e JSON-LD (inicial e casos)
+  og.tsx             desenho da imagem de compartilhamento
+next.config.mjs      rewrites / → /pt e /projetos/* → /pt/projetos/*, redirects de volta, globalNotFound, cabeçalhos de segurança
 ```
 
 ---
@@ -111,7 +115,7 @@ next.config.mjs      rewrite / → /pt, redirect /pt → /, globalNotFound
 - Todo texto visível em `lib/i18n.ts` (pt e en). Inglês simples (B1). Voz: formal, técnica e próxima; números reais, sem "soluções", "sinergia", exclamação. Nada de texto que se vende (exceção aprovada: "Eu transformo trabalho manual em sistema").
 
 ### Texto e fatos
-- Não inventar números, clientes ou depoimentos. Fatos confirmados: mais de 30 automações no total (mais de 20 num dos trabalhos); extração de documentos de uma semana para 2–3 horas; 2–3 dias → ~1 hora (CV); 80–90% menos trabalho manual; sistemas para ~30 pessoas; chatbot e agente de auditoria para 50 pessoas; resposta em até 24 horas.
+- Não inventar números, clientes ou depoimentos. Fatos confirmados: mais de 30 automações no total (mais de 20 num dos trabalhos); declarações mensais de ISS (DDS + guia DAM) de ~450 empresas, de quase uma semana para ~3 horas (o CV antigo dizia 2–3 dias → 1 hora: vale a versão nova); auditoria de conversas com IA: mais de 200 conversas/mês, nenhuma → todas auditadas, usada em 3 automações, seguiu funcionando depois que ele saiu; 80–90% menos trabalho manual; sistemas para ~30 pessoas; chatbot e agente de auditoria para 50 pessoas; resposta em até 24 horas.
 - **Empregadores nunca pelo nome** no site: "Empresa de serviços profissionais" / "Escritório de serviços profissionais".
 
 ---
@@ -148,7 +152,7 @@ Se o build der `EPERM`/`EBUSY` em `.next`, é o OneDrive (ou um terminal aberto 
 ## Pendências
 
 1. Deploy (auditoria de 17/11 feita: ver `PREFERENCIAS.md`). Depois: Search Console + Bing com o endereço vercel.app (plano de SEO/GEO, fases 5 e 6).
-2. Página de CV em HTML (`/cv`, `/en/cv`) e, quando chegarem os estudos de caso, uma página por caso.
+2. Página de CV em HTML (`/cv`, `/en/cv`). Os dois estudos de caso já estão no ar (18/11); novos casos entram em `cases.items` (i18n) + `CASES` (content.ts).
 3. No EmailJS: restringir as origens permitidas a williancosta.vercel.app (painel do EmailJS, segurança da conta).
 4. Atualizar `PRODUCT.md` e `DESIGN.md` para o site final.
 5. Testes cross-browser reais (Safari e Firefox) do palco e dos cartazes.

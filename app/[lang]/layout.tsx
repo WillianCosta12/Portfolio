@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { notFound } from 'next/navigation'
 import { Analytics } from '@vercel/analytics/react'
 import { LANGS, isLang } from '@/lib/i18n'
-import { LANG_TAG, homeJsonLd, homeMetadata } from '@/lib/seo'
+import { LANG_TAG, homeMetadata } from '@/lib/seo'
 import { fontVars } from '../fonts'
 import '../globals.css'
 
@@ -44,11 +44,6 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: ENTER_SCRIPT }} />
-        <script
-          type="application/ld+json"
-          // the facts about him, as one graph (lib/seo.ts); '<' escaped so the JSON can never close the tag
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd(lang)).replace(/</g, '\\u003c') }}
-        />
       </head>
       <body>
         {children}

@@ -7,11 +7,14 @@ import { AnimatePresence, motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { BrandSymbol } from '@/components/brand/logo'
-import { CONTACT, CONTACT_LINKS, LIVE_PROJECTS, PORTRAIT, SERVICE_TOOLS, TOOLS } from '@/lib/content'
+import { CASES, CONTACT, CONTACT_LINKS, LIVE_PROJECTS, PORTRAIT, SERVICE_TOOLS, TOOLS, casePath } from '@/lib/content'
 import { TRAP_FIELD, useContactForm, useIsoLayoutEffect } from './hooks'
 import { DocCard, stageLineX } from './stage'
 import { Demo } from './demo'
 import { Mosaic, type MosaicApi } from './mosaic'
+import { FlowDiagram } from './flow-diagram'
+import { usePageLang } from './lang-provider'
+import type { CaseCopy } from './case-view'
 import { track } from './track'
 import s from './site.module.css'
 
@@ -49,6 +52,17 @@ export function Flow() {
   const steps = t('site.process_steps', { returnObjects: true }) as Item[]
   const kpis = t('site.kpis', { returnObjects: true }) as Kpi[]
   const jobs = t('site.jobs', { returnObjects: true }) as Kinded[]
+  const cases = t('cases.items', { returnObjects: true }) as CaseCopy[]
+  const lang = usePageLang()
+  // the case that proves a service (02) or a job in production (05), if there is one
+  const caseOfService = (i: number) => CASES.findIndex((c) => c.service === i)
+  const caseOfJob = (i: number) => CASES.findIndex((c) => c.job === i)
+  const caseLink = (k: number, where: string) => (
+    <a className={s.caseLink} href={casePath(lang, CASES[k].id)} onClick={() => track('case_open', { case: CASES[k].id, where })}>
+      {t('cases.see')}: {cases[k].short}
+      <Arrow />
+    </a>
+  )
   const experience = t('about.experience', { returnObjects: true }) as { period: string; role: string; company: string }[]
   const form = useContactForm()
   const [auto, setAuto] = useState(false)
@@ -87,6 +101,7 @@ export function Flow() {
   // where each tool was used: the services and the projects that list it
   const usedIn = (tool: string) => [
     ...services.filter((_, i) => SERVICE_TOOLS[i]?.includes(tool)).map((x) => x.title),
+    ...CASES.filter((c) => (c.stack as readonly string[]).includes(tool)).map((c) => cases[CASES.indexOf(c)]?.short),
     ...LIVE_PROJECTS.filter((p) => (p.stack as readonly string[]).includes(tool)).map((p) => work[LIVE_PROJECTS.indexOf(p)]?.title),
   ]
 
@@ -404,6 +419,7 @@ export function Flow() {
                   <div>
                     <h3 className={s.rowTitle}>{item.title}</h3>
                     <p className={s.rowText}>{item.text}</p>
+                    {caseOfService(i) >= 0 && caseLink(caseOfService(i), 'services')}
                   </div>
                   <ul className={s.tools} aria-label={t('site.tools_label')}>
                     {(SERVICE_TOOLS[i] ?? []).map((id) => {
@@ -431,7 +447,19 @@ export function Flow() {
           </div>
         </section>
 
-        {/* 03 · processar — projects as posters that stack */}
+        {/* 02, continued: what I do, shown working — an automation in miniature (out of the pinned table) */}
+        <div className={`${s.ch} ${s.demoCh}`}>
+          <div className={s.demoBlock}>
+            <h3 className={s.demoH}>
+              <span className={s.comment}>{'// '}</span>
+              {t('site.demo_h')}
+            </h3>
+            <p className={s.demoNote}>{t('site.demo_note')}</p>
+            <Demo />
+          </div>
+        </div>
+
+        {/* 03 · processar — the two cases first (work in production), then my own projects, as posters that stack */}
         <section id="projetos" className={`${s.ch} ${s.work}`} aria-labelledby="h-process">
           {node(1)}
           <div className={s.chHead}>
@@ -441,8 +469,68 @@ export function Flow() {
             <p className={s.lead}>{t('site.work_intro')}</p>
           </div>
           <div className={s.posters}>
-            {LIVE_PROJECTS.map((p, i) => {
-              const item = work[i]
+            {CASES.map((c, i) => {
+              const item = cases[i]
+              return (
+                <Fragment key={c.id}>
+                  <div
+                    aria-hidden="true"
+                    ref={(el) => {
+                      markerRefs.current[i] = el
+                    }}
+                  />
+                  <article
+                    className={`${s.poster} ${s.posterCase}`}
+                    aria-labelledby={`p-${c.id}`}
+                    ref={(el) => {
+                      posterRefs.current[i] = el
+                    }}
+                  >
+                    <div className={s.posterInner}>
+                      <p className={s.posterMeta}>
+                        <span>
+                          {t('site.project_of', { n: i + 1, total: CASES.length + LIVE_PROJECTS.length })} · {t('cases.label')}
+                        </span>
+                        <span className={s.liveTag}>{t('status.production')}</span>
+                      </p>
+                      <h3 id={`p-${c.id}`} className={`${s.posterTitle} ${s.posterTitleCase}`}>
+                        {item.short}
+                      </h3>
+                      <div className={`${s.posterShot} ${s.posterDiagram}`}>
+                        <FlowDiagram file={item.file} steps={item.diagram} label={`${t('cases.flow')}: ${item.short}`} compact />
+                      </div>
+                      <div className={s.posterText}>
+                        <p className={s.kind}>{item.kind}</p>
+                        <p className={s.posterP}>{item.description}</p>
+                        <ul className={s.posterStats}>
+                          {item.stats.slice(0, 2).map((st) => (
+                            <li key={st.value}>
+                              <strong>{st.value}</strong> {st.label}
+                            </li>
+                          ))}
+                        </ul>
+                        <div className={s.links}>
+                          <a className={`${s.btn} ${s.btnDark}`} href={casePath(lang, c.id)} onClick={() => track('case_open', { case: c.id, where: 'poster' })}>
+                            {t('cases.read')}
+                            <Arrow />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className={s.dim}
+                      aria-hidden="true"
+                      ref={(el) => {
+                        dimRefs.current[i] = el
+                      }}
+                    />
+                  </article>
+                </Fragment>
+              )
+            })}
+            {LIVE_PROJECTS.map((p, j) => {
+              const item = work[j]
+              const i = CASES.length + j
               return (
                 <Fragment key={p.id}>
                   <div
@@ -460,7 +548,7 @@ export function Flow() {
                   >
                     <div className={s.posterInner}>
                       <p className={s.posterMeta}>
-                        <span>{t('site.project_of', { n: i + 1, total: LIVE_PROJECTS.length })}</span>
+                        <span>{t('site.project_of', { n: i + 1, total: CASES.length + LIVE_PROJECTS.length })}</span>
                         <span className={s.liveTag}>{t('status.live')}</span>
                       </p>
                       <h3 id={`p-${p.id}`} className={s.posterTitle}>
@@ -530,14 +618,6 @@ export function Flow() {
               </li>
             ))}
           </ol>
-          <div className={s.demoBlock}>
-            <h3 className={s.demoH}>
-              <span className={s.comment}>{'// '}</span>
-              {t('site.demo_h')}
-            </h3>
-            <p className={s.demoNote}>{t('site.demo_note')}</p>
-            <Demo />
-          </div>
         </section>
 
         {/* 05 · entregar — the clean panel: real numbers and the work in production */}
@@ -610,12 +690,13 @@ export function Flow() {
               ))}
             </div>
             <ul className={s.jobs}>
-              {jobs.map((job) => (
+              {jobs.map((job, i) => (
                 <li key={job.title} className={s.job}>
                   <span className={s.jobKind}>{job.kind}</span>
                   <div>
                     <h3 className={s.jobTitle}>{job.title}</h3>
                     <p className={s.jobText}>{job.text}</p>
+                    {caseOfJob(i) >= 0 && caseLink(caseOfJob(i), 'results')}
                   </div>
                   <span className={`${s.panelLive} ${s.jobStatus}`}>{t('status.production')}</span>
                 </li>

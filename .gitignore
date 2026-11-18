@@ -44,3 +44,19 @@ portfolio-video-animation.html
 # LibreOffice lock files e temporários do Office
 public/.~lock.*
 public/*.tmp
+
+# Skills de design: estado local (checagens, capturas, perfis de Chrome)
+.taste-skill/
+
+# Arquivo local (site de novembro e os 5 modelos, 17/11)
+_arquivo/
+
+# Notas de trabalho locais (citam setores e respostas pessoais; o repositório é público)
+PREFERENCIAS.md
+PRODUCT.md
+DESIGN.md
+
+# Ferramentas de design instaladas localmente
+.claude/skills/
+.impeccable/
+skills-lock.json

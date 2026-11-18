@@ -1,0 +1,3 @@
+Fontes usadas só na imagem de compartilhamento (opengraph-image.tsx), lidas no build.
+Space Grotesk e IBM Plex Sans, licença SIL Open Font License 1.1 (Google Fonts).
+A pasta começa com "_" para o Next não tratar como rota.

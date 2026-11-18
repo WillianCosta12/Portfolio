@@ -1,309 +1,154 @@
-# CLAUDE.md — Portfolio Willian Costa
+# CLAUDE.md — Portfolio Willian Costa (wcosta.dev)
 
 > Arquivo de contexto para o Claude Code. Leia este arquivo inteiro antes de qualquer alteração no projeto.
+> Site final de 17/11/2026: o modelo 5 ("do caos ao sistema") como base, mais os detalhes que o Willian escolheu nos outros modelos. O registro de tudo o que ele quer e não quer está em **`PREFERENCIAS.md`**: leia antes de mudar visual, motion ou texto.
+> O site de novembro (campo de blocos, espinha, um capítulo por tela) e os 5 modelos foram retirados; o código deles está em `_arquivo/` (ignorado no git).
 
 ---
 
 ## Projetos em desenvolvimento (stand by)
 
-Estes dois projetos estão planejados mas só serão iniciados após o portfolio estar finalizado visualmente (redesign + animações completas, faltando apenas os dados reais dos projetos).
+Estes dois projetos estão planejados mas só serão iniciados depois que o portfolio estiver publicado.
 
 | Projeto | Tipo | Stack |
 |---|---|---|
 | **FlowApp** | Landing page de app móvel — hero com mockup 3D, scroll storytelling, animações avançadas | React · TypeScript · Tailwind · Framer Motion |
 | **Velour** | E-commerce de moda — lookbook, filtro por cor/tamanho, wishlist, carrinho, checkout, JWT | React · Node.js · PostgreSQL · JWT · Tailwind |
 
-Quando o portfolio estiver pronto para receber projetos reais, retomar o desenvolvimento destes dois.
-
 ---
 
 ## Sobre o Projeto
 
-Portfolio pessoal de **Willian Costa**, desenvolvedor Full-stack Junior. O objetivo é mostrar capacidade técnica em full-stack + automações, com storytelling de desenvolvimento (processo Figma → código). O site é bilíngue (PT/EN), suporta dark/light mode e será publicado até **27 de julho de 2026**.
+Portfolio **pessoal** de **Willian Costa**, desenvolvedor full-stack em Natal (RN), com a identidade visual **wcosta.dev**. Mostra o que ele faz (sistemas web, automações e integrações, IA aplicada, sites) para quem quer contratá-lo: projeto (PJ) ou vaga (CLT), remoto ou presencial. **Sem foco em setor**; trabalhos de emprego aparecem anonimizados.
 
-**URL de produção planejada:** `https://williancosta.dev`  
-**Deploy:** Vercel  
-**Repositório:** GitHub
+A página conta uma história com o scroll: papéis espalhados (o trabalho manual) se organizam, um documento (`rotina_manual.pdf`) é lido e riscado como "automatizado", e um bloco segue por uma linha teal pelos capítulos 01–07 (ler, entender, processar, validar, entregar, assinar, notificar).
+
+- **Endereço:** `https://williancosta.vercel.app`, e continua assim (decisão de 17/11/2026: sem compra de domínio). `SITE_URL` em `lib/seo.ts` usa esse endereço. "wcosta.dev" é só o nome da marca, não um endereço.
+- **Idiomas:** `/` é português e `/en` é inglês, cada um renderizado no servidor no seu idioma (canonical e hreflang em `lib/seo.ts`). Não há troca de idioma no cliente nem detecção pelo navegador.
+- **Deploy:** Vercel. **Repositório:** GitHub.
+- Produto e marca: **`PRODUCT.md`**. Sistema visual: **`DESIGN.md`** (ambos ainda descrevem parte do site de novembro; atualizar).
 
 ---
 
-## Stack Técnica (como está no código)
+## Stack Técnica
 
 | Camada | Tecnologia |
 |---|---|
-| Framework | **Next.js 16** (App Router) + TypeScript |
-| Estilização | **Tailwind CSS v4** (via `@tailwindcss/postcss`) |
-| Componentes UI | **shadcn/ui** (Radix UI primitives) |
-| Animações | **Framer Motion v12** |
-| i18n | **react-i18next** (recursos inline em `lib/i18n.ts`) |
-| Tema | Context API customizado (`contexts/theme-context.tsx`) |
-| Ícones | **lucide-react** |
-| Gerenciador de pacotes | **pnpm** |
+| Framework | **Next.js 16.4.6** (App Router) + TypeScript; páginas estáticas por idioma (`app/[lang]`, `generateStaticParams`) |
+| Estilização | **CSS Modules** (`components/site/site.module.css`) + `app/globals.css` (só tokens, base e o link de pular) + Tailwind v4 (utilitários pontuais, como no logo) |
+| Animações | **GSAP 3 + ScrollTrigger** (palco preso, scrub, cartazes, conector, trilho), **Framer Motion 12** (demonstração e troca do painel), canvas 2D (retrato em blocos), CSS (entrada da abertura, hover, press) |
+| i18n | **react-i18next**; o texto fica em `lib/i18n.ts` (só dados, `COPY.pt`/`COPY.en`); cada página monta o seu i18next em `components/site/lang-provider.tsx` |
+| SEO/GEO | `lib/seo.ts` (metadados, JSON-LD em `@graph`), `app/robots.ts`, `app/sitemap.ts`, `app/manifest.ts`, `app/llms.txt/route.ts`, imagem OG por idioma |
+| Fontes | `app/fonts.ts` (`next/font/google`): Space Grotesk (títulos; 700 só no logo), IBM Plex Sans (corpo), IBM Plex Mono (rótulos). A imagem OG lê TTFs de `app/[lang]/_fonts/` |
+| Medição | Vercel Analytics; eventos em `components/site/track.ts` (só registram nos planos Pro/Enterprise) |
+| Segurança | Cabeçalhos em `next.config.mjs` (CSP só em produção, HSTS, nosniff, frame DENY, Referrer/Permissions-Policy, COOP); sem `X-Powered-By`. Formulário com limite por campo e campo-armadilha para robôs (`TRAP_FIELD` em `hooks.ts`). Ao usar um serviço externo novo, libere o domínio na CSP |
+| Gerenciador | **pnpm** (o `node_modules` é do pnpm 11; lockfile formato 9.0). Na máquina do Willian o pnpm não está no PATH: `npm run dev/build/start/lint` e, para mexer em dependências, `npx pnpm@11 add/remove ...` (nunca `npm install`, que criaria um package-lock) |
 
-> ⚠️ O plano original era Vite + React + Tailwind v3. O v0 gerou Next.js + Tailwind v4. **Mantenha o que está — não migre.**
+> Tema único claro com faixas grafite. **Não há toggle de tema.** Não reintroduzir `.dark` nem ThemeProvider.
+> `components/ui/` (shadcn) fica no repo, fora do CSS (`@source not` em `globals.css`). Não use esses componentes na página.
 
 ---
 
-## Estrutura de Arquivos
+## Estrutura
 
 ```
-portfolio-willian-costa/
-├── app/
-│   ├── globals.css          # CSS global: tokens, animações, utilitários
-│   ├── layout.tsx           # Root layout: fonts (Inter, Space Grotesk, JetBrains Mono), metadata, OG
-│   └── page.tsx             # Entry point → <Portfolio />
-├── components/
-│   ├── portfolio.tsx        # Shell: ThemeProvider + Navbar + seções + Footer
-│   ├── navbar.tsx           # Navbar fixa: links, toggle dark/light, toggle PT/EN, menu mobile
-│   ├── hero.tsx             # Hero 100vh: typewriter, gradient orbs, CTAs, social links
-│   ├── about.tsx            # Sobre: bio, skills, experience timeline, social links, stats
-│   ├── projects.tsx         # Projetos: grid + filtro por stack (dados placeholder)
-│   ├── contact.tsx          # Contato: form com validação (envio ainda mock)
-│   ├── footer.tsx           # Footer simples
-│   ├── back-to-top.tsx      # Botão flutuante de voltar ao topo
-│   └── ui/                  # Componentes shadcn/ui (não editar diretamente)
-├── contexts/
-│   └── theme-context.tsx    # ThemeProvider: dark/light via classList + localStorage
-├── hooks/
-│   ├── use-typewriter.ts    # Hook do efeito typewriter do hero
-│   ├── use-intersection-observer.ts  # Hook para animações on scroll
-│   ├── use-mobile.ts        # Hook de detecção mobile
-│   └── use-toast.ts         # Hook de toast notifications
-├── lib/
-│   ├── i18n.ts              # Configuração i18next + todas as traduções PT/EN
-│   └── utils.ts             # cn() helper (clsx + tailwind-merge)
-└── public/                  # Assets estáticos (imagens placeholder por enquanto)
+app/
+  [lang]/layout.tsx       raiz de cada idioma: <html lang>, metadados, JSON-LD, linha do head que liga html.m-enter, Analytics
+  [lang]/page.tsx         → <Site lang />
+  [lang]/opengraph-image.tsx  imagem de compartilhamento no idioma (fontes em [lang]/_fonts)
+  global-not-found.tsx    404 bilíngue na marca (experimental.globalNotFound)
+  fonts.ts, globals.css, icon.svg, apple-icon.tsx, robots.ts, sitemap.ts, manifest.ts, llms.txt/route.ts
+components/site/
+  site.tsx           menu em pílula (link PT/EN), main (Stage + Flow), rodapé com atalhos, bloco que segue o cursor
+  lang-provider.tsx  i18next por idioma + usePageLang
+  stage.tsx          abertura + 01: papéis, apresentação, documento lido e riscado, linha teal
+  chapters.tsx       conector, 02 tabela presa, 03 cartazes, 04 checagens + demonstração, 05 painel + chamada, 06 Sobre, 07 contato em terminal
+  demo.tsx, mosaic.tsx, hooks.ts (formulário EmailJS), track.ts, site.module.css
+components/brand/logo.tsx   BrandSymbol + Logo (tone dark|light)
+lib/
+  i18n.ts            TODO o texto visível, PT e EN (só dados)
+  content.ts         links, ferramentas, projetos, retrato — sem texto visível
+  seo.ts             SITE_URL, CONTENT_UPDATED, metadados e JSON-LD
+next.config.mjs      rewrite / → /pt, redirect /pt → /, globalNotFound
 ```
 
 ---
 
-## Design System — Tokens de Cor
+## Marca wcosta.dev — tokens (`app/globals.css`, `:root`)
 
-As cores estão definidas como CSS custom properties em `app/globals.css`.
+| Token | Valor | Uso |
+|---|---|---|
+| `--grafite` | #0C1211 | fundos escuros (abertura, Sobre, painéis, rodapé) |
+| `--tinta` | #17201D | texto principal |
+| `--teal` | #0D9488 | ação sobre fundo claro (botão com **texto grafite**, 5,1:1) |
+| `--teal-claro` | #2DD4BF | ação sobre fundo escuro |
+| `--teal-escuro` | #115E59 | foco e links de texto sobre claro |
+| `--realce` | #CCF3EE | seleção, realce suave |
+| `--apoio` | #5B6B66 | rótulos e metadados (nunca texto de leitura) |
+| `--fundo` / `--superficie` | #F6F8F7 / #FFFFFF | fundo da página / superfícies |
+| `--linha` | tinta a 14% | réguas de 1px |
+| `--g-tinta`, `--g-apoio`, `--g-linha` | | texto e linhas sobre grafite |
 
-### Dark Mode (`.dark`)
-```css
---bg: #030303
---surface: #0A0A0A
---surface-elevated: #141414
---border: #262626
---text: #FFFFFF
---text-secondary: #E5E5E5
---text-muted: #A3A3A3
---accent: #22C55E          /* verde principal */
---accent-hover: #4ADE80
---accent-light: #86EFAC
---accent-muted: rgba(34, 197, 94, 0.2)
---accent-border: rgba(34, 197, 94, 0.5)
-```
-
-### Light Mode (`:root`)
-```css
---bg: #FAFAFA
---surface: #FFFFFF
---surface-elevated: #F4F4F5
---border: #E4E4E7
---text: #18181B
---text-secondary: #3F3F46
---text-muted: #52525B
---accent: #059669
---accent-hover: #047857
---accent-muted: rgba(5, 150, 105, 0.12)
---accent-border: rgba(5, 150, 105, 0.3)
-```
-
-> ⚠️ **Divergência do design spec original:** O Figma especificou `#3DDBA0` (mint) como accent e `#3B1E54` (purple) como brand accent. O v0 implementou verde Tailwind (#22C55E/#059669). Antes de trocar, pergunte ao Willian se quer corrigir para o spec ou manter o verde atual.
-
-### Tipografia
-- **Display/Headings:** `font-display` → Space Grotesk (variável `--font-space-grotesk`)
-- **Body:** `font-sans` → Inter (variável `--font-inter`)
-- **Mono:** `font-mono` → JetBrains Mono (variável `--font-jetbrains`)
-
-> ⚠️ **Divergência:** O spec do Figma define Unbounded como display font. O v0 usou Space Grotesk. Pergunte antes de trocar.
-
-### Classes CSS utilitárias disponíveis (definidas em globals.css)
-```
-.glow            → box-shadow verde (light/dark aware)
-.text-glow       → text-shadow verde
-.glass           → glassmorphism backdrop-blur
-.grid-pattern    → grid de linhas sutis no background
-.card-hover      → translateY(-6px) + shadow no hover
-.link-underline  → underline animado da esquerda
-.shimmer         → shimmer effect animado
-.gradient-orb    → orb de gradiente (hero background)
-.gradient-orb-2  → orb secundário
-.noise-overlay   → textura de ruído sutil
-.cursor          → cursor piscante do typewriter
-.animate-float   → float suave infinito
-```
+- Teal nunca passa de ~10% da composição. Sem gradientes nem glow; a única sombra é a do menu em pílula (funcional, aprovada).
+- O **canto superior direito reto** é a assinatura do símbolo: `border-radius: 16px 0 16px 16px` em molduras e painéis.
+- Tipo: títulos Space Grotesk 500, tracking −0.02 a −0.04em; corpo IBM Plex Sans; rótulos em IBM Plex Mono com estética de código (`02 · entender o-que-faco/`).
 
 ---
 
-## O que já está implementado ✅
+## Padrões de Código
 
-- [x] Setup completo (Next.js + Tailwind v4 + TypeScript + pnpm)
-- [x] Dark/Light mode (ThemeContext + CSS variables + localStorage)
-- [x] i18n PT/EN completo (react-i18next, todos os textos traduzidos)
-- [x] Navbar responsiva (links, toggle dark/light, toggle PT/EN, menu mobile com slide)
-- [x] Hero (typewriter do nome, gradient orbs animados, partículas flutuantes, grid pattern, CTAs, social links, scroll indicator)
-- [x] Seção Sobre (bio, skills tags, experience timeline, social links, stats)
-- [x] Seção Projetos (grid 2 colunas, filtro por stack, cards com hover)
-- [x] Seção Contato (form com validação client-side, estados de loading/sucesso/erro)
-- [x] Footer
-- [x] BackToTop button
-- [x] Hooks: `useTypewriter`, `useIntersectionObserver`, `useMobile`, `useToast`
-- [x] Metadata SEO completa em `layout.tsx` (title, description, OG, Twitter card)
-- [x] Acessibilidade: skip link, aria-labels, focus-visible
+### Layout
+- Coluna de conteúdo de no máximo 1120px (`--gx`/`--wx` em `.page`); o trilho teal corre à esquerda da coluna.
+- `.page` tem `overflow-x: clip` (não quebra o sticky): nada de rolagem lateral, conferido com a barra de rolagem visível.
 
----
-
-## O que FALTA fazer ❌
-
-### Prioridade Alta — Conteúdo Real
-1. **Dados reais dos projetos** — `components/projects.tsx` está com 4 projetos placeholder. Substituir pelos 6 projetos reais:
-   - **Nexus** (Star Project ⭐) — Kanban full-stack, React + Spring Boot + PostgreSQL + JWT
-   - **DevCard** — GitHub Profile Generator, React + Node.js + GitHub API
-   - **Lumis** — Landing SaaS fictícia, React + Framer Motion (Lighthouse 100)
-   - **FlowMoney** — Controle financeiro, React + Spring Boot + PostgreSQL + Recharts
-   - **Automação 01** — Case Study anonimizado (emprego atual)
-   - **Automação 02** — Content Pipeline N8N (Notion → PT/EN → Buffer → Telegram)
-
-2. **URLs reais** — GitHub e LinkedIn em `components/hero.tsx` e `components/about.tsx` ainda apontam para `https://github.com` e `https://linkedin.com`. Substituir pelos links reais do Willian.
-
-3. **Email real** — `contato@williancosta.dev` em `contact.tsx` e `about.tsx`.
-
-4. **Experience real** — `components/about.tsx` tem apenas "Full-stack Developer / Freelancer / 2024–Presente". Pode detalhar mais se o Willian quiser.
-
-5. **Stats reais** — "2+ Anos de Experiência" e "15+ Projetos Completos" em `about.tsx`. Ajustar para refletir a realidade.
-
-### Prioridade Alta — Funcionalidades
-6. **Envio real do formulário de contato** — `components/contact.tsx` ainda usa `setTimeout` mockado. Integrar **EmailJS** ou **Formspree**. EmailJS não requer backend.
-
-7. **Download CV** — O hero no design spec tem um botão "Download CV". Não implementado ainda. Adicionar botão no Hero e na seção Sobre. O CV deve ser um PDF em `/public/willian-costa-cv.pdf`.
-
-### Prioridade Média — Seções Faltantes
-8. **Seção Case Studies** — Não existe no código. Criar `components/case-studies.tsx` com o formato: Contexto → Problema → Solução → Diagrama → Resultado. Pelo menos as 2 automações documentadas.
-
-9. **Imagens nos cards de projeto** — Os cards em `projects.tsx` não têm imagem/cover. Adicionar imagem de capa (screenshot ou mockup) para cada projeto.
-
-### Prioridade Média — Design
-10. **Variação de background entre seções** — O spec define backgrounds diferentes por seção no dark mode:
-    - Hero: `#030303` (atual ✓)
-    - Sobre: `#0A0A14` (toque de roxo) — atualmente é padrão
-    - Projetos: `#040D08` (toque de verde) — atualmente usa `bg-card/30`
-    - Contato: `#030303` (atual ✓)
-
-11. **Badge de status nos cards** — Spec define badges: Concluído / Em Progresso / Conceito. Não implementado.
-
-12. **Tags de stack coloridas** — O spec define tags mint (verde), purple e neutral. Atualmente todas são `bg-secondary` neutras.
-
-### Prioridade Baixa — Melhorias
-13. **SEO — OG Image** — Criar uma imagem Open Graph real e referenciar no `layout.tsx`.
-14. **Lighthouse ≥ 90** — Rodar Lighthouse e corrigir issues antes do deploy.
-15. **Testes cross-browser** — Chrome, Firefox, Safari (mobile e desktop).
-16. **Vercel Analytics** — `@vercel/analytics` já está no package.json, só falta adicionar `<Analytics />` no layout.
-
----
-
-## Padrões de Código a Seguir
-
-### Componentes
-- Todos são `'use client'` (Next.js App Router com Framer Motion)
-- Animações de entrada: sempre use `useIntersectionObserver` + `motion.div` com `animate={isInView ? 'visible' : 'hidden'}`
-- Para animações de hover: use `whileHover` e `whileTap` do Framer Motion
-- Stagger em listas: use `containerVariants` + `itemVariants` (padrão já no código)
-
-### Estilização
-- Sempre use CSS variables via `var(--token)` para cores do design system
-- Use `bg-[var(--accent)]`, `text-[var(--accent)]`, etc. para o accent color
-- Não hardcode cores hex no JSX — use os tokens definidos em globals.css
-- Para bordas de hover: `hover:border-[var(--accent-border)]`
-- Para background sutil: `hover:bg-[var(--accent-muted)]`
-- Breakpoints mobile-first: `sm:` (640px), `md:` (768px), `lg:` (1024px)
+### Motion
+- A história é contada pelo scroll (GSAP com scrub). Hover só em `(hover: hover) and (pointer: fine)`; curva `--ease-out` cubic-bezier(.23,1,.32,1); press `scale(.98)` + 1px.
+- O nome na abertura nunca começa invisível (é o maior texto da página, o LCP): só sobe; selo e botões fazem fade.
+- Medidas de layout para o GSAP: uma vez por refresh (`refreshInit`), nunca dentro de valores de tween ou de `onUpdate` (cada leitura entre escritas força um recálculo de estilo).
+- `prefers-reduced-motion`: nada preso nem com scrub; cada cena no estado final, todo o texto visível.
 
 ### i18n
-- Todos os textos visíveis ao usuário devem usar `const { t } = useTranslation()`
-- Adicionar sempre as chaves nos dois idiomas em `lib/i18n.ts` (pt e en)
-- Nunca hardcode strings em PT ou EN diretamente no JSX
+- Todo texto visível em `lib/i18n.ts` (pt e en). Inglês simples (B1). Voz: formal, técnica e próxima; números reais, sem "soluções", "sinergia", exclamação. Nada de texto que se vende (exceção aprovada: "Eu transformo trabalho manual em sistema").
 
-### Fontes
-- Headings/títulos: `className="font-display"` → Space Grotesk
-- Body text: `className="font-sans"` → Inter (padrão do body)
-- Código/mono: `className="font-mono"` → JetBrains Mono
-
-### Animações — Timing padrão
-```
-hover rápido:   duration: 0.18s
-cards/médio:    duration: 0.25s
-seções/entrada: duration: 0.6s, ease: [0.22, 1, 0.36, 1]
-stagger delay:  0.08–0.12s por item
-```
+### Texto e fatos
+- Não inventar números, clientes ou depoimentos. Fatos confirmados: mais de 30 automações no total (mais de 20 num dos trabalhos); extração de documentos de uma semana para 2–3 horas; 2–3 dias → ~1 hora (CV); 80–90% menos trabalho manual; sistemas para ~30 pessoas; chatbot e agente de auditoria para 50 pessoas; resposta em até 24 horas.
+- **Empregadores nunca pelo nome** no site: "Empresa de serviços profissionais" / "Escritório de serviços profissionais".
 
 ---
 
-## Integração EmailJS (para o formulário de contato)
+## Integração EmailJS (formulário de contato)
 
-Quando for implementar o envio real, usar EmailJS:
-
-```bash
-pnpm add @emailjs/browser
-```
-
-```typescript
-// Em components/contact.tsx, substituir o setTimeout por:
-import emailjs from '@emailjs/browser'
-
-await emailjs.send(
-  'SERVICE_ID',    // do painel EmailJS
-  'TEMPLATE_ID',   // do painel EmailJS
-  {
-    from_name: formData.name,
-    from_email: formData.email,
-    message: formData.message,
-  },
-  'PUBLIC_KEY'     // do painel EmailJS
-)
-```
-
-As chaves devem ir em variáveis de ambiente (`.env.local`):
+`components/site/hooks.ts` (`useContactForm`) envia por `fetch` à API do EmailJS com as chaves de `.env.local`:
 ```
 NEXT_PUBLIC_EMAILJS_SERVICE_ID=
 NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=
 NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
 ```
+Sem as chaves o formulário diz que está indisponível — **nunca simula sucesso**. O assunto (projeto ou vaga) vai no topo da mensagem.
 
 ---
 
-## Comandos Úteis
+## Comandos
 
 ```bash
-pnpm dev          # servidor de desenvolvimento em localhost:3000
-pnpm build        # build de produção
-pnpm lint         # ESLint
+npm run dev       # localhost:3000
+npm run build     # build de produção (checa tipos)
+npm run start     # serve o build
+npm run lint      # ESLint (regras do Next: Core Web Vitals + TypeScript); components/ui e _arquivo ficam fora
 ```
+Se o build der `EPERM`/`EBUSY` em `.next`, é o OneDrive (ou um terminal aberto dentro de `.next`) travando arquivos: `rm -rf .next` e rode de novo. Erro de fonte do Google no build costuma ser passageiro: rode de novo.
+
+### Skills de design instaladas (`.claude/skills/`)
+- **impeccable** — direção e revisão (`PRODUCT.md`, `DESIGN.md`, `impeccable detect`).
+- **design-taste-frontend** — estrutura, texto e checagens no Chrome. Estado local em `.taste-skill/` (ignorado no git).
+- **emil-design-eng** — decisões de motion.
 
 ---
 
-## Próximos Passos Recomendados (em ordem)
+## Pendências
 
-1. Substituir dados placeholder dos projetos pelos projetos reais em `components/projects.tsx`
-2. Adicionar URLs reais (GitHub, LinkedIn, email) nos componentes
-3. Integrar EmailJS no formulário de contato
-4. Adicionar botão de Download CV no Hero e no Sobre
-5. Criar a seção Case Studies (`components/case-studies.tsx`)
-6. Adicionar imagens de capa nos cards de projeto
-7. Implementar variação de background entre seções
-8. Adicionar `<Analytics />` do Vercel no `layout.tsx`
-9. Rodar Lighthouse e corrigir issues
-10. Deploy Vercel + configurar domínio
-
----
-
-## Observações Importantes
-
-- **Willian está empregado** — o portfólio é projeto pessoal, não está buscando vagas. Tom: vitrine de capacidade técnica, não CV de hunting.
-- **Inglês B1** — os textos em inglês devem ser simples e diretos. Nada muito idiomático.
-- **Automações do emprego** — devem ser documentadas como case studies **anonimizados**. Nunca citar empresa, cliente ou dados reais.
-- **Prazo:** 27 de julho de 2026.
-- **Deploy:** Vercel (já configurado com `vercel.json` na raiz).
-- **pnpm** é o gerenciador de pacotes — não use npm ou yarn.
+1. Deploy (auditoria de 17/11 feita: ver `PREFERENCIAS.md`). Depois: Search Console + Bing com o endereço vercel.app (plano de SEO/GEO, fases 5 e 6).
+2. Página de CV em HTML (`/cv`, `/en/cv`) e, quando chegarem os estudos de caso, uma página por caso.
+3. No EmailJS: restringir as origens permitidas a williancosta.vercel.app (painel do EmailJS, segurança da conta).
+4. Atualizar `PRODUCT.md` e `DESIGN.md` para o site final.
+5. Testes cross-browser reais (Safari e Firefox) do palco e dos cartazes.

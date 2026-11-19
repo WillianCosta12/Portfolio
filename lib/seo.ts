@@ -7,10 +7,18 @@ import { COPY, LANGS, type Lang } from '@/lib/i18n'
 import { CASES, CONTACT, LIVE_PROJECTS, PORTRAIT, TOOLS, casePath, type CaseId } from '@/lib/content'
 
 /**
- * The public address. Set SITE_URL=https://wcosta.dev in Vercel when the domain points here;
- * until then the site lives on the vercel.app address.
+ * The public address: the site lives on the vercel.app address (no own domain, a decision of 17/11/2026).
+ * SITE_URL in the environment would override it, should that ever change.
  */
 export const SITE_URL = (process.env.SITE_URL || 'https://williancosta.vercel.app').replace(/\/+$/, '')
+
+/**
+ * Ownership checks for the search engines (the "HTML tag" method of Google Search Console and Bing Webmaster
+ * Tools): the content of each meta tag. Kept here, or set in the environment without a code change.
+ */
+// Google Search Console, property https://williancosta.vercel.app/ (also verified by public/google0ce34917bdb2d59a.html)
+const GOOGLE_VERIFICATION = process.env.GOOGLE_SITE_VERIFICATION || 'wFJeikJiTZB-yrdPsq6Szdp8-aLxQCtDTN5p5OndeSE'
+const BING_VERIFICATION = process.env.BING_SITE_VERIFICATION || ''
 
 /** When the page's text last changed (sitemap and dateModified). Update it with the copy. */
 export const CONTENT_UPDATED = '2026-11-18'
@@ -64,6 +72,10 @@ export function homeMetadata(lang: Lang): Metadata {
     },
     twitter: { card: 'summary_large_image', title: m.title, description: m.description },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
+    verification: {
+      ...(GOOGLE_VERIFICATION ? { google: GOOGLE_VERIFICATION } : {}),
+      ...(BING_VERIFICATION ? { other: { 'msvalidate.01': BING_VERIFICATION } } : {}),
+    },
     // page type for the Taste skill checkers (consistency.mjs, copy-lint)
     other: { 'page-type': 'software', 'site-kind': 'software' },
   }

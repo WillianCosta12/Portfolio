@@ -20,8 +20,13 @@ export const SITE_URL = (process.env.SITE_URL || 'https://williancosta.vercel.ap
 const GOOGLE_VERIFICATION = process.env.GOOGLE_SITE_VERIFICATION || 'wFJeikJiTZB-yrdPsq6Szdp8-aLxQCtDTN5p5OndeSE'
 const BING_VERIFICATION = process.env.BING_SITE_VERIFICATION || ''
 
-/** When the page's text last changed (sitemap and dateModified). Update it with the copy. */
-export const CONTENT_UPDATED = '2026-11-18'
+/**
+ * When the page's text last changed (sitemap and dateModified). Update it with the copy.
+ * A full ISO 8601 date-time with the offset (Natal, UTC−3): Google rejects a bare date in ProfilePage.
+ */
+export const CONTENT_UPDATED = '2026-11-18T12:00:00-03:00'
+/** When the case studies went up. */
+const CASES_PUBLISHED = '2026-11-18T12:00:00-03:00'
 
 export const NAME = 'Willian Costa'
 export const BRAND = 'wcosta.dev'
@@ -243,7 +248,7 @@ export function caseJsonLd(lang: Lang, id: CaseId) {
         publisher: { '@id': PERSON_ID },
         isPartOf: { '@id': WEBSITE_ID },
         mainEntityOfPage: url,
-        datePublished: '2026-11-18',
+        datePublished: CASES_PUBLISHED,
         dateModified: CONTENT_UPDATED,
         image: `${url}/opengraph-image`,
         articleSection: c.cases.label,
